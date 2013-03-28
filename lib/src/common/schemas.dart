@@ -405,6 +405,9 @@ class GetQueryResultsResponse {
   /** The resource type of the response. */
   String kind;
 
+  /** A token used for paging results. */
+  String pageToken;
+
   /** An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above. Present only when the query completes successfully. */
   List<TableRow> rows;
 
@@ -427,6 +430,9 @@ class GetQueryResultsResponse {
     }
     if (json.containsKey("kind")) {
       kind = json["kind"];
+    }
+    if (json.containsKey("pageToken")) {
+      pageToken = json["pageToken"];
     }
     if (json.containsKey("rows")) {
       rows = [];
@@ -457,6 +463,9 @@ class GetQueryResultsResponse {
     }
     if (kind != null) {
       output["kind"] = kind;
+    }
+    if (pageToken != null) {
+      output["pageToken"] = pageToken;
     }
     if (rows != null) {
       output["rows"] = new List();
@@ -584,9 +593,6 @@ class JobConfiguration {
   /** [Pick one] Configures a load job. */
   JobConfigurationLoad load;
 
-  /** [Optional] Properties providing extra details about how the job should be run. Not used for most jobs. */
-  JobConfigurationProperties properties;
-
   /** [Pick one] Configures a query job. */
   JobConfigurationQuery query;
 
@@ -603,9 +609,6 @@ class JobConfiguration {
     }
     if (json.containsKey("load")) {
       load = new JobConfigurationLoad.fromJson(json["load"]);
-    }
-    if (json.containsKey("properties")) {
-      properties = new JobConfigurationProperties.fromJson(json["properties"]);
     }
     if (json.containsKey("query")) {
       query = new JobConfigurationQuery.fromJson(json["query"]);
@@ -627,9 +630,6 @@ class JobConfiguration {
     }
     if (load != null) {
       output["load"] = load.toJson();
-    }
-    if (properties != null) {
-      output["properties"] = properties.toJson();
     }
     if (query != null) {
       output["query"] = query.toJson();
@@ -809,7 +809,7 @@ class JobConfigurationLoad {
   /** [Required] The fully-qualified URIs that point to your data on Google Cloud Storage. */
   List<String> sourceUris;
 
-  /** [Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. If WRITE_TRUNCATE is set, BigQuery overwrites the table. If WRITE_APPEND is set, BigQuery appends the data to the table. If WRITE_EMPTY is set and the table is not empty, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion. */
+  /** [Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion. */
   String writeDisposition;
 
   /** Create new JobConfigurationLoad from JSON data */
@@ -919,26 +919,10 @@ class JobConfigurationLoad {
 
 }
 
-class JobConfigurationProperties {
-
-  /** Create new JobConfigurationProperties from JSON data */
-  JobConfigurationProperties.fromJson(Map json) {
-  }
-
-  /** Create JSON Object for JobConfigurationProperties */
-  Map toJson() {
-    var output = new Map();
-
-
-    return output;
-  }
-
-  /** Return String representation of JobConfigurationProperties */
-  String toString() => JSON.stringify(this.toJson());
-
-}
-
 class JobConfigurationQuery {
+
+  /** [Experimental] If true, allows >128M results to be materialized in the destination table. Requires destination_table to be set. */
+  bool allowLargeResults;
 
   /** [Optional] Whether to create the table if it doesn't already exist (CREATE_IF_NEEDED) or to require the table already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED. */
   String createDisposition;
@@ -963,6 +947,9 @@ class JobConfigurationQuery {
 
   /** Create new JobConfigurationQuery from JSON data */
   JobConfigurationQuery.fromJson(Map json) {
+    if (json.containsKey("allowLargeResults")) {
+      allowLargeResults = json["allowLargeResults"];
+    }
     if (json.containsKey("createDisposition")) {
       createDisposition = json["createDisposition"];
     }
@@ -990,6 +977,9 @@ class JobConfigurationQuery {
   Map toJson() {
     var output = new Map();
 
+    if (allowLargeResults != null) {
+      output["allowLargeResults"] = allowLargeResults;
+    }
     if (createDisposition != null) {
       output["createDisposition"] = createDisposition;
     }
@@ -1553,6 +1543,9 @@ class ProjectListProjects {
   /** The resource type. */
   String kind;
 
+  /** The numeric ID of this project. */
+  String numericId;
+
   /** A unique reference to this project. */
   ProjectReference projectReference;
 
@@ -1566,6 +1559,9 @@ class ProjectListProjects {
     }
     if (json.containsKey("kind")) {
       kind = json["kind"];
+    }
+    if (json.containsKey("numericId")) {
+      numericId = json["numericId"];
     }
     if (json.containsKey("projectReference")) {
       projectReference = new ProjectReference.fromJson(json["projectReference"]);
@@ -1584,6 +1580,9 @@ class ProjectListProjects {
     }
     if (kind != null) {
       output["kind"] = kind;
+    }
+    if (numericId != null) {
+      output["numericId"] = numericId;
     }
     if (projectReference != null) {
       output["projectReference"] = projectReference.toJson();
@@ -1718,11 +1717,17 @@ class QueryResponse {
   /** The resource type. */
   String kind;
 
+  /** A token used for paging results. */
+  String pageToken;
+
   /** An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above. */
   List<TableRow> rows;
 
   /** The schema of the results. Present only when the query completes successfully. */
   TableSchema schema;
+
+  /** The total number of bytes processed for this query. If this query was a dry run, this is the number of bytes that would be processed if the query were run. */
+  String totalBytesProcessed;
 
   /** The total number of rows in the complete query result set, which can be more than the number of rows in this single page of results. */
   String totalRows;
@@ -1738,6 +1743,9 @@ class QueryResponse {
     if (json.containsKey("kind")) {
       kind = json["kind"];
     }
+    if (json.containsKey("pageToken")) {
+      pageToken = json["pageToken"];
+    }
     if (json.containsKey("rows")) {
       rows = [];
       json["rows"].forEach((item) {
@@ -1746,6 +1754,9 @@ class QueryResponse {
     }
     if (json.containsKey("schema")) {
       schema = new TableSchema.fromJson(json["schema"]);
+    }
+    if (json.containsKey("totalBytesProcessed")) {
+      totalBytesProcessed = json["totalBytesProcessed"];
     }
     if (json.containsKey("totalRows")) {
       totalRows = json["totalRows"];
@@ -1765,6 +1776,9 @@ class QueryResponse {
     if (kind != null) {
       output["kind"] = kind;
     }
+    if (pageToken != null) {
+      output["pageToken"] = pageToken;
+    }
     if (rows != null) {
       output["rows"] = new List();
       rows.forEach((item) {
@@ -1773,6 +1787,9 @@ class QueryResponse {
     }
     if (schema != null) {
       output["schema"] = schema.toJson();
+    }
+    if (totalBytesProcessed != null) {
+      output["totalBytesProcessed"] = totalBytesProcessed;
     }
     if (totalRows != null) {
       output["totalRows"] = totalRows;
@@ -2023,7 +2040,7 @@ class TableFieldSchema {
   /** [Required] The field name. */
   String name;
 
-  /** [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN or RECORD (where RECORD indicates a nested schema). */
+  /** [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates a nested schema). */
   String type;
 
   /** Create new TableFieldSchema from JSON data */

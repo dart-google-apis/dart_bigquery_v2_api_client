@@ -314,13 +314,15 @@ class JobsResource extends Resource {
    *
    * [maxResults] - Maximum number of results to read
    *
+   * [pageToken] - Page token, returned by a previous call, to request the next page of results
+   *
    * [startIndex] - Zero-based index of the starting row
    *
    * [timeoutMs] - How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error
    *
    * [optParams] - Additional query parameters
    */
-  Future<GetQueryResultsResponse> getQueryResults(String projectId, String jobId, {int maxResults, String startIndex, int timeoutMs, Map optParams}) {
+  Future<GetQueryResultsResponse> getQueryResults(String projectId, String jobId, {int maxResults, String pageToken, String startIndex, int timeoutMs, Map optParams}) {
     var completer = new Completer();
     var url = "projects/{projectId}/queries/{jobId}";
     var urlParams = new Map();
@@ -330,6 +332,7 @@ class JobsResource extends Resource {
     if (jobId == null) paramErrors.add("jobId is required");
     if (jobId != null) urlParams["jobId"] = jobId;
     if (maxResults != null) queryParams["maxResults"] = maxResults;
+    if (pageToken != null) queryParams["pageToken"] = pageToken;
     if (projectId == null) paramErrors.add("projectId is required");
     if (projectId != null) urlParams["projectId"] = projectId;
     if (startIndex != null) queryParams["startIndex"] = startIndex;
