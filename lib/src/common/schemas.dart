@@ -7,37 +7,37 @@ Default values assigned to a new dataset are as follows: OWNER - Project owners,
 See ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.
 To revoke rights to a dataset, call datasets.update() and omit the names of anyone whose rights you wish to revoke. However, every dataset must have at least one entity granted OWNER role.
 Each access object can have only one of the following members: userByEmail, groupByEmail, domain, or allAuthenticatedUsers. */
-  List<DatasetAccess> access;
+  core.List<DatasetAccess> access;
 
   /** [Output-only] The time when this dataset was created, in milliseconds since the epoch. */
-  String creationTime;
+  core.String creationTime;
 
   /** [Required] Reference identifying dataset. */
   DatasetReference datasetReference;
 
   /** [Optional] A user-friendly string description for the dataset. This might be shown in BigQuery UI for browsing the dataset. */
-  String description;
+  core.String description;
 
   /** [Output-only] A hash of this resource. */
-  String etag;
+  core.String etag;
 
   /** [Optional] A descriptive name for this dataset, which might be shown in any BigQuery user interfaces for browsing the dataset. Use datasetId for making API calls. */
-  String friendlyName;
+  core.String friendlyName;
 
   /** [Output-only] The fully-qualified unique name of this dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field. */
-  String id;
+  core.String id;
 
   /** [Output-only] The resource type. */
-  String kind;
+  core.String kind;
 
   /** [Output-only] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch. */
-  String lastModifiedTime;
+  core.String lastModifiedTime;
 
   /** [Output-only] An URL that can be used to access this resource again. You can use this URL in Get or Update requests to this resource. */
-  String selfLink;
+  core.String selfLink;
 
   /** Create new Dataset from JSON data */
-  Dataset.fromJson(Map json) {
+  Dataset.fromJson(core.Map json) {
     if (json.containsKey("access")) {
       access = [];
       json["access"].forEach((item) {
@@ -74,11 +74,11 @@ Each access object can have only one of the following members: userByEmail, grou
   }
 
   /** Create JSON Object for Dataset */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (access != null) {
-      output["access"] = new List();
+      output["access"] = new core.List();
       access.forEach((item) {
         output["access"].add(item.toJson());
       });
@@ -115,29 +115,29 @@ Each access object can have only one of the following members: userByEmail, grou
   }
 
   /** Return String representation of Dataset */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class DatasetAccess {
 
   /** [Pick one] A domain to grant access to. Any users signed in with the domain specified will be granted the specified access. Example: "example.com". */
-  String domain;
+  core.String domain;
 
   /** [Pick one] A fully-qualified email address of a mailing list to grant access to. This must be either a Google Groups mailing list (ends in @googlegroups.com) or a group managed by an enterprise version of Google Groups. */
-  String groupByEmail;
+  core.String groupByEmail;
 
   /** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READ - User can call any list() or get() method on any collection or resource. WRITE - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default. */
-  String role;
+  core.String role;
 
   /** [Pick one] A special group to grant access to. The valid values are: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. */
-  String specialGroup;
+  core.String specialGroup;
 
   /** [Pick one] A fully qualified email address of a user to grant access to. For example: fred@example.com. */
-  String userByEmail;
+  core.String userByEmail;
 
   /** Create new DatasetAccess from JSON data */
-  DatasetAccess.fromJson(Map json) {
+  DatasetAccess.fromJson(core.Map json) {
     if (json.containsKey("domain")) {
       domain = json["domain"];
     }
@@ -156,8 +156,8 @@ class DatasetAccess {
   }
 
   /** Create JSON Object for DatasetAccess */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (domain != null) {
       output["domain"] = domain;
@@ -179,26 +179,26 @@ class DatasetAccess {
   }
 
   /** Return String representation of DatasetAccess */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class DatasetList {
 
   /** An array of one or more summarized dataset resources. Absent when there are no datasets in the specified project. */
-  List<DatasetListDatasets> datasets;
+  core.List<DatasetListDatasets> datasets;
 
   /** A hash of this page of results. See Paging Through Results in the developer's guide. */
-  String etag;
+  core.String etag;
 
   /** The type of list. */
-  String kind;
+  core.String kind;
 
   /** A token to request the next page of results. Present only when there is more than one page of results.* See Paging Through Results in the developer's guide. */
-  String nextPageToken;
+  core.String nextPageToken;
 
   /** Create new DatasetList from JSON data */
-  DatasetList.fromJson(Map json) {
+  DatasetList.fromJson(core.Map json) {
     if (json.containsKey("datasets")) {
       datasets = [];
       json["datasets"].forEach((item) {
@@ -217,11 +217,11 @@ class DatasetList {
   }
 
   /** Create JSON Object for DatasetList */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (datasets != null) {
-      output["datasets"] = new List();
+      output["datasets"] = new core.List();
       datasets.forEach((item) {
         output["datasets"].add(item.toJson());
       });
@@ -240,7 +240,7 @@ class DatasetList {
   }
 
   /** Return String representation of DatasetList */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
@@ -250,16 +250,16 @@ class DatasetListDatasets {
   DatasetReference datasetReference;
 
   /** A descriptive name for this dataset, if one exists. */
-  String friendlyName;
+  core.String friendlyName;
 
   /** The fully-qualified unique name of this dataset in the format projectId:datasetId. */
-  String id;
+  core.String id;
 
   /** The resource type. */
-  String kind;
+  core.String kind;
 
   /** Create new DatasetListDatasets from JSON data */
-  DatasetListDatasets.fromJson(Map json) {
+  DatasetListDatasets.fromJson(core.Map json) {
     if (json.containsKey("datasetReference")) {
       datasetReference = new DatasetReference.fromJson(json["datasetReference"]);
     }
@@ -275,8 +275,8 @@ class DatasetListDatasets {
   }
 
   /** Create JSON Object for DatasetListDatasets */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (datasetReference != null) {
       output["datasetReference"] = datasetReference.toJson();
@@ -295,20 +295,20 @@ class DatasetListDatasets {
   }
 
   /** Return String representation of DatasetListDatasets */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class DatasetReference {
 
   /** [Required] A unique ID for this dataset, without the project name. */
-  String datasetId;
+  core.String datasetId;
 
   /** [Optional] The ID of the container project. */
-  String projectId;
+  core.String projectId;
 
   /** Create new DatasetReference from JSON data */
-  DatasetReference.fromJson(Map json) {
+  DatasetReference.fromJson(core.Map json) {
     if (json.containsKey("datasetId")) {
       datasetId = json["datasetId"];
     }
@@ -318,8 +318,8 @@ class DatasetReference {
   }
 
   /** Create JSON Object for DatasetReference */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (datasetId != null) {
       output["datasetId"] = datasetId;
@@ -332,26 +332,26 @@ class DatasetReference {
   }
 
   /** Return String representation of DatasetReference */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class ErrorProto {
 
   /** Debugging information for the service, if present. Should be ignored. */
-  String debugInfo;
+  core.String debugInfo;
 
   /** Specifies where the error occurred, if present. */
-  String location;
+  core.String location;
 
   /** A human readable explanation of the error. */
-  String message;
+  core.String message;
 
   /** Specifies the error reason. For example, reason will be "required" or "invalid" if some field was missing or malformed. */
-  String reason;
+  core.String reason;
 
   /** Create new ErrorProto from JSON data */
-  ErrorProto.fromJson(Map json) {
+  ErrorProto.fromJson(core.Map json) {
     if (json.containsKey("debugInfo")) {
       debugInfo = json["debugInfo"];
     }
@@ -367,8 +367,8 @@ class ErrorProto {
   }
 
   /** Create JSON Object for ErrorProto */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (debugInfo != null) {
       output["debugInfo"] = debugInfo;
@@ -387,38 +387,38 @@ class ErrorProto {
   }
 
   /** Return String representation of ErrorProto */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class GetQueryResultsResponse {
 
   /** A hash of this response. */
-  String etag;
+  core.String etag;
 
   /** Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available. */
-  bool jobComplete;
+  core.bool jobComplete;
 
   /** Reference to the BigQuery Job that was created to run the query. This field will be present even if the original request timed out, in which case GetQueryResults can be used to read the results once the query has completed. Since this API only returns the first page of results, subsequent pages can be fetched via the same mechanism (GetQueryResults). */
   JobReference jobReference;
 
   /** The resource type of the response. */
-  String kind;
+  core.String kind;
 
   /** A token used for paging results. */
-  String pageToken;
+  core.String pageToken;
 
   /** An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above. Present only when the query completes successfully. */
-  List<TableRow> rows;
+  core.List<TableRow> rows;
 
   /** The schema of the results. Present only when the query completes successfully. */
   TableSchema schema;
 
   /** The total number of rows in the complete query result set, which can be more than the number of rows in this single page of results. Present only when the query completes successfully. */
-  String totalRows;
+  core.String totalRows;
 
   /** Create new GetQueryResultsResponse from JSON data */
-  GetQueryResultsResponse.fromJson(Map json) {
+  GetQueryResultsResponse.fromJson(core.Map json) {
     if (json.containsKey("etag")) {
       etag = json["etag"];
     }
@@ -449,8 +449,8 @@ class GetQueryResultsResponse {
   }
 
   /** Create JSON Object for GetQueryResultsResponse */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (etag != null) {
       output["etag"] = etag;
@@ -468,7 +468,7 @@ class GetQueryResultsResponse {
       output["pageToken"] = pageToken;
     }
     if (rows != null) {
-      output["rows"] = new List();
+      output["rows"] = new core.List();
       rows.forEach((item) {
         output["rows"].add(item.toJson());
       });
@@ -484,7 +484,7 @@ class GetQueryResultsResponse {
   }
 
   /** Return String representation of GetQueryResultsResponse */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
@@ -494,19 +494,19 @@ class Job {
   JobConfiguration configuration;
 
   /** [Output-only] A hash of this resource. */
-  String etag;
+  core.String etag;
 
   /** [Output-only] Opaque ID field of the job */
-  String id;
+  core.String id;
 
   /** [Optional] Reference describing the unique-per-user name of the job. */
   JobReference jobReference;
 
   /** [Output-only] The type of the resource. */
-  String kind;
+  core.String kind;
 
   /** [Output-only] A URL that can be used to access this resource again. */
-  String selfLink;
+  core.String selfLink;
 
   /** [Output-only] Information about the job, including starting time and ending time of the job. */
   JobStatistics statistics;
@@ -515,7 +515,7 @@ class Job {
   JobStatus status;
 
   /** Create new Job from JSON data */
-  Job.fromJson(Map json) {
+  Job.fromJson(core.Map json) {
     if (json.containsKey("configuration")) {
       configuration = new JobConfiguration.fromJson(json["configuration"]);
     }
@@ -543,8 +543,8 @@ class Job {
   }
 
   /** Create JSON Object for Job */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (configuration != null) {
       output["configuration"] = configuration.toJson();
@@ -575,7 +575,7 @@ class Job {
   }
 
   /** Return String representation of Job */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
@@ -583,6 +583,9 @@ class JobConfiguration {
 
   /** [Pick one] Copies a table. */
   JobConfigurationTableCopy copy;
+
+  /** [Optional] If set, don't actually run this job. A valid query will return a mostly empty response with some processing statistics, while an invalid query will return the same error it would if it wasn't a dry run. Behavior of non-query jobs is undefined. */
+  core.bool dryRun;
 
   /** [Pick one] Configures an extract job. */
   JobConfigurationExtract extract;
@@ -597,9 +600,12 @@ class JobConfiguration {
   JobConfigurationQuery query;
 
   /** Create new JobConfiguration from JSON data */
-  JobConfiguration.fromJson(Map json) {
+  JobConfiguration.fromJson(core.Map json) {
     if (json.containsKey("copy")) {
       copy = new JobConfigurationTableCopy.fromJson(json["copy"]);
+    }
+    if (json.containsKey("dryRun")) {
+      dryRun = json["dryRun"];
     }
     if (json.containsKey("extract")) {
       extract = new JobConfigurationExtract.fromJson(json["extract"]);
@@ -616,11 +622,14 @@ class JobConfiguration {
   }
 
   /** Create JSON Object for JobConfiguration */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (copy != null) {
       output["copy"] = copy.toJson();
+    }
+    if (dryRun != null) {
+      output["dryRun"] = dryRun;
     }
     if (extract != null) {
       output["extract"] = extract.toJson();
@@ -639,29 +648,29 @@ class JobConfiguration {
   }
 
   /** Return String representation of JobConfiguration */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobConfigurationExtract {
 
   /** [Experimental] Optional and defaults to CSV. Format with which files should be exported. To export to CSV, specify "CSV". Tables with nested or repeated fields cannot be exported as CSV. To export to newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". */
-  String destinationFormat;
+  core.String destinationFormat;
 
   /** [Required] The fully-qualified Google Cloud Storage URI where the extracted table should be written. */
-  String destinationUri;
+  core.String destinationUri;
 
   /** [Optional] Delimiter to use between fields in the exported data. Default is ',' */
-  String fieldDelimiter;
+  core.String fieldDelimiter;
 
   /** [Optional] Whether to print out a heder row in the results. Default is true. */
-  bool printHeader;
+  core.bool printHeader;
 
   /** [Required] A reference to the table being exported. */
   TableReference sourceTable;
 
   /** Create new JobConfigurationExtract from JSON data */
-  JobConfigurationExtract.fromJson(Map json) {
+  JobConfigurationExtract.fromJson(core.Map json) {
     if (json.containsKey("destinationFormat")) {
       destinationFormat = json["destinationFormat"];
     }
@@ -680,8 +689,8 @@ class JobConfigurationExtract {
   }
 
   /** Create JSON Object for JobConfigurationExtract */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (destinationFormat != null) {
       output["destinationFormat"] = destinationFormat;
@@ -703,26 +712,26 @@ class JobConfigurationExtract {
   }
 
   /** Return String representation of JobConfigurationExtract */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobConfigurationLink {
 
   /** [Optional] Whether or not to create a new table, if none exists. */
-  String createDisposition;
+  core.String createDisposition;
 
   /** [Required] The destination table of the link job. */
   TableReference destinationTable;
 
   /** [Required] URI of source table to link. */
-  List<String> sourceUri;
+  core.List<core.String> sourceUri;
 
   /** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_APPEND. */
-  String writeDisposition;
+  core.String writeDisposition;
 
   /** Create new JobConfigurationLink from JSON data */
-  JobConfigurationLink.fromJson(Map json) {
+  JobConfigurationLink.fromJson(core.Map json) {
     if (json.containsKey("createDisposition")) {
       createDisposition = json["createDisposition"];
     }
@@ -741,8 +750,8 @@ class JobConfigurationLink {
   }
 
   /** Create JSON Object for JobConfigurationLink */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (createDisposition != null) {
       output["createDisposition"] = createDisposition;
@@ -751,7 +760,7 @@ class JobConfigurationLink {
       output["destinationTable"] = destinationTable.toJson();
     }
     if (sourceUri != null) {
-      output["sourceUri"] = new List();
+      output["sourceUri"] = new core.List();
       sourceUri.forEach((item) {
         output["sourceUri"].add(item);
       });
@@ -764,56 +773,56 @@ class JobConfigurationLink {
   }
 
   /** Return String representation of JobConfigurationLink */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobConfigurationLoad {
 
   /** Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false. */
-  bool allowQuotedNewlines;
+  core.bool allowQuotedNewlines;
 
   /** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. */
-  String createDisposition;
+  core.String createDisposition;
 
   /** [Required] The destination table to load the data into. */
   TableReference destinationTable;
 
   /** [Optional] The character encoding of the data. The supported values are UTF-8 or ISO-8859-1. The default value is UTF-8. BigQuery decodes the data after the raw, binary data has been split using the values of the quote and fieldDelimiter properties. */
-  String encoding;
+  core.String encoding;
 
   /** [Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). */
-  String fieldDelimiter;
+  core.String fieldDelimiter;
 
   /** [Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an 'invalid' error is returned in the job result and the job fails. The default value is 0, which requires that all records are valid. */
-  int maxBadRecords;
+  core.int maxBadRecords;
 
   /** [Optional] The value that is used to quote data sections in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. The default value is a double-quote ('"'). If your data does not contain quoted sections, set the property value to an empty string. If your data contains quoted newline characters, you must also set the allowQuotedNewlines property to true. */
-  String quote;
+  core.String quote;
 
   /** [Optional] The schema for the destination table. The schema can be omitted if the destination table already exists or if the schema can be inferred from the loaded data. */
   TableSchema schema;
 
   /** [Deprecated] The inline schema. For CSV schemas, specify as "Field1:Type1[,Field2:Type2]*". For example, "foo:STRING, bar:INTEGER, baz:FLOAT". */
-  String schemaInline;
+  core.String schemaInline;
 
   /** [Deprecated] The format of the schemaInline property. */
-  String schemaInlineFormat;
+  core.String schemaInlineFormat;
 
   /** [Optional] The number of rows at the top of a CSV file that BigQuery will skip when loading the data. The default value is 0. This property is useful if you have header rows in the file that should be skipped. */
-  int skipLeadingRows;
+  core.int skipLeadingRows;
 
   /** [Optional] The format of the data files. For CSV files, specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". The default value is CSV. */
-  String sourceFormat;
+  core.String sourceFormat;
 
   /** [Required] The fully-qualified URIs that point to your data on Google Cloud Storage. */
-  List<String> sourceUris;
+  core.List<core.String> sourceUris;
 
   /** [Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion. */
-  String writeDisposition;
+  core.String writeDisposition;
 
   /** Create new JobConfigurationLoad from JSON data */
-  JobConfigurationLoad.fromJson(Map json) {
+  JobConfigurationLoad.fromJson(core.Map json) {
     if (json.containsKey("allowQuotedNewlines")) {
       allowQuotedNewlines = json["allowQuotedNewlines"];
     }
@@ -862,8 +871,8 @@ class JobConfigurationLoad {
   }
 
   /** Create JSON Object for JobConfigurationLoad */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (allowQuotedNewlines != null) {
       output["allowQuotedNewlines"] = allowQuotedNewlines;
@@ -902,7 +911,7 @@ class JobConfigurationLoad {
       output["sourceFormat"] = sourceFormat;
     }
     if (sourceUris != null) {
-      output["sourceUris"] = new List();
+      output["sourceUris"] = new core.List();
       sourceUris.forEach((item) {
         output["sourceUris"].add(item);
       });
@@ -915,17 +924,17 @@ class JobConfigurationLoad {
   }
 
   /** Return String representation of JobConfigurationLoad */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobConfigurationQuery {
 
   /** [Experimental] If true, allows >128M results to be materialized in the destination table. Requires destination_table to be set. */
-  bool allowLargeResults;
+  core.bool allowLargeResults;
 
   /** [Optional] Whether to create the table if it doesn't already exist (CREATE_IF_NEEDED) or to require the table already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED. */
-  String createDisposition;
+  core.String createDisposition;
 
   /** [Optional] Specifies the default dataset to assume for unqualified table names in the query. */
   DatasetReference defaultDataset;
@@ -934,19 +943,19 @@ class JobConfigurationQuery {
   TableReference destinationTable;
 
   /** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. */
-  bool preserveNulls;
+  core.bool preserveNulls;
 
   /** [Optional] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH. */
-  String priority;
+  core.String priority;
 
   /** [Required] BigQuery SQL query to execute. */
-  String query;
+  core.String query;
 
   /** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_EMPTY. */
-  String writeDisposition;
+  core.String writeDisposition;
 
   /** Create new JobConfigurationQuery from JSON data */
-  JobConfigurationQuery.fromJson(Map json) {
+  JobConfigurationQuery.fromJson(core.Map json) {
     if (json.containsKey("allowLargeResults")) {
       allowLargeResults = json["allowLargeResults"];
     }
@@ -974,8 +983,8 @@ class JobConfigurationQuery {
   }
 
   /** Create JSON Object for JobConfigurationQuery */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (allowLargeResults != null) {
       output["allowLargeResults"] = allowLargeResults;
@@ -1006,14 +1015,14 @@ class JobConfigurationQuery {
   }
 
   /** Return String representation of JobConfigurationQuery */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobConfigurationTableCopy {
 
   /** [Optional] Whether or not to create a new table, if none exists. */
-  String createDisposition;
+  core.String createDisposition;
 
   /** [Required] The destination table */
   TableReference destinationTable;
@@ -1022,10 +1031,10 @@ class JobConfigurationTableCopy {
   TableReference sourceTable;
 
   /** [Optional] Whether or not to append or require the table to be empty. */
-  String writeDisposition;
+  core.String writeDisposition;
 
   /** Create new JobConfigurationTableCopy from JSON data */
-  JobConfigurationTableCopy.fromJson(Map json) {
+  JobConfigurationTableCopy.fromJson(core.Map json) {
     if (json.containsKey("createDisposition")) {
       createDisposition = json["createDisposition"];
     }
@@ -1041,8 +1050,8 @@ class JobConfigurationTableCopy {
   }
 
   /** Create JSON Object for JobConfigurationTableCopy */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (createDisposition != null) {
       output["createDisposition"] = createDisposition;
@@ -1061,29 +1070,29 @@ class JobConfigurationTableCopy {
   }
 
   /** Return String representation of JobConfigurationTableCopy */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobList {
 
   /** A hash of this page of results. */
-  String etag;
+  core.String etag;
 
   /** List of jobs that were requested. */
-  List<JobListJobs> jobs;
+  core.List<JobListJobs> jobs;
 
   /** The resource type of the response. */
-  String kind;
+  core.String kind;
 
   /** A token to request the next page of results. */
-  String nextPageToken;
+  core.String nextPageToken;
 
   /** Total number of jobs in this collection. */
-  int totalItems;
+  core.int totalItems;
 
   /** Create new JobList from JSON data */
-  JobList.fromJson(Map json) {
+  JobList.fromJson(core.Map json) {
     if (json.containsKey("etag")) {
       etag = json["etag"];
     }
@@ -1105,14 +1114,14 @@ class JobList {
   }
 
   /** Create JSON Object for JobList */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (etag != null) {
       output["etag"] = etag;
     }
     if (jobs != null) {
-      output["jobs"] = new List();
+      output["jobs"] = new core.List();
       jobs.forEach((item) {
         output["jobs"].add(item.toJson());
       });
@@ -1131,7 +1140,7 @@ class JobList {
   }
 
   /** Return String representation of JobList */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
@@ -1144,16 +1153,16 @@ class JobListJobs {
   ErrorProto errorResult;
 
   /** Unique opaque ID of the job. */
-  String id;
+  core.String id;
 
   /** Job reference uniquely identifying the job. */
   JobReference jobReference;
 
   /** The resource type. */
-  String kind;
+  core.String kind;
 
   /** Running state of the job. When the state is DONE, errorResult can be checked to determine whether the job succeeded or failed. */
-  String state;
+  core.String state;
 
   /** [Output-only] Information about the job, including starting time and ending time of the job. */
   JobStatistics statistics;
@@ -1162,7 +1171,7 @@ class JobListJobs {
   JobStatus status;
 
   /** Create new JobListJobs from JSON data */
-  JobListJobs.fromJson(Map json) {
+  JobListJobs.fromJson(core.Map json) {
     if (json.containsKey("configuration")) {
       configuration = new JobConfiguration.fromJson(json["configuration"]);
     }
@@ -1190,8 +1199,8 @@ class JobListJobs {
   }
 
   /** Create JSON Object for JobListJobs */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (configuration != null) {
       output["configuration"] = configuration.toJson();
@@ -1222,20 +1231,20 @@ class JobListJobs {
   }
 
   /** Return String representation of JobListJobs */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobReference {
 
   /** [Required] ID of the job. */
-  String jobId;
+  core.String jobId;
 
   /** [Required] Project ID being billed for the job. */
-  String projectId;
+  core.String projectId;
 
   /** Create new JobReference from JSON data */
-  JobReference.fromJson(Map json) {
+  JobReference.fromJson(core.Map json) {
     if (json.containsKey("jobId")) {
       jobId = json["jobId"];
     }
@@ -1245,8 +1254,8 @@ class JobReference {
   }
 
   /** Create JSON Object for JobReference */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (jobId != null) {
       output["jobId"] = jobId;
@@ -1259,14 +1268,14 @@ class JobReference {
   }
 
   /** Return String representation of JobReference */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobStatistics {
 
   /** [Output-only] End time of this job, in milliseconds since the epoch. */
-  String endTime;
+  core.String endTime;
 
   /** [Output-only] Statistics for a load job. */
   JobStatistics3 load;
@@ -1275,13 +1284,13 @@ class JobStatistics {
   JobStatistics2 query;
 
   /** [Output-only] Start time of this job, in milliseconds since the epoch. */
-  String startTime;
+  core.String startTime;
 
   /** [Output-only] [Deprecated] Use the bytes processed in the query statistics instead. */
-  String totalBytesProcessed;
+  core.String totalBytesProcessed;
 
   /** Create new JobStatistics from JSON data */
-  JobStatistics.fromJson(Map json) {
+  JobStatistics.fromJson(core.Map json) {
     if (json.containsKey("endTime")) {
       endTime = json["endTime"];
     }
@@ -1300,8 +1309,8 @@ class JobStatistics {
   }
 
   /** Create JSON Object for JobStatistics */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (endTime != null) {
       output["endTime"] = endTime;
@@ -1323,25 +1332,25 @@ class JobStatistics {
   }
 
   /** Return String representation of JobStatistics */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobStatistics2 {
 
   /** [Output-only] Total bytes processed for this job. */
-  String totalBytesProcessed;
+  core.String totalBytesProcessed;
 
   /** Create new JobStatistics2 from JSON data */
-  JobStatistics2.fromJson(Map json) {
+  JobStatistics2.fromJson(core.Map json) {
     if (json.containsKey("totalBytesProcessed")) {
       totalBytesProcessed = json["totalBytesProcessed"];
     }
   }
 
   /** Create JSON Object for JobStatistics2 */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (totalBytesProcessed != null) {
       output["totalBytesProcessed"] = totalBytesProcessed;
@@ -1351,26 +1360,26 @@ class JobStatistics2 {
   }
 
   /** Return String representation of JobStatistics2 */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class JobStatistics3 {
 
   /** [Output-only] Number of bytes of source data in a joad job. */
-  String inputFileBytes;
+  core.String inputFileBytes;
 
   /** [Output-only] Number of source files in a load job. */
-  String inputFiles;
+  core.String inputFiles;
 
   /** [Output-only] Size of the loaded data in bytes. Note that while an import job is in the running state, this value may change. */
-  String outputBytes;
+  core.String outputBytes;
 
   /** [Output-only] Number of rows imported in a load job. Note that while an import job is in the running state, this value may change. */
-  String outputRows;
+  core.String outputRows;
 
   /** Create new JobStatistics3 from JSON data */
-  JobStatistics3.fromJson(Map json) {
+  JobStatistics3.fromJson(core.Map json) {
     if (json.containsKey("inputFileBytes")) {
       inputFileBytes = json["inputFileBytes"];
     }
@@ -1386,8 +1395,8 @@ class JobStatistics3 {
   }
 
   /** Create JSON Object for JobStatistics3 */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (inputFileBytes != null) {
       output["inputFileBytes"] = inputFileBytes;
@@ -1406,7 +1415,7 @@ class JobStatistics3 {
   }
 
   /** Return String representation of JobStatistics3 */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
@@ -1416,13 +1425,13 @@ class JobStatus {
   ErrorProto errorResult;
 
   /** [Output-only] All errors encountered during the running of the job. Errors here do not necessarily mean that the job has completed or was unsuccessful. */
-  List<ErrorProto> errors;
+  core.List<ErrorProto> errors;
 
   /** [Output-only] Running state of the job. */
-  String state;
+  core.String state;
 
   /** Create new JobStatus from JSON data */
-  JobStatus.fromJson(Map json) {
+  JobStatus.fromJson(core.Map json) {
     if (json.containsKey("errorResult")) {
       errorResult = new ErrorProto.fromJson(json["errorResult"]);
     }
@@ -1438,14 +1447,14 @@ class JobStatus {
   }
 
   /** Create JSON Object for JobStatus */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (errorResult != null) {
       output["errorResult"] = errorResult.toJson();
     }
     if (errors != null) {
-      output["errors"] = new List();
+      output["errors"] = new core.List();
       errors.forEach((item) {
         output["errors"].add(item.toJson());
       });
@@ -1458,29 +1467,29 @@ class JobStatus {
   }
 
   /** Return String representation of JobStatus */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class ProjectList {
 
   /** A hash of the page of results */
-  String etag;
+  core.String etag;
 
   /** The type of list. */
-  String kind;
+  core.String kind;
 
   /** A token to request the next page of results. */
-  String nextPageToken;
+  core.String nextPageToken;
 
   /** Projects to which you have at least READ access. */
-  List<ProjectListProjects> projects;
+  core.List<ProjectListProjects> projects;
 
   /** The total number of projects in the list. */
-  int totalItems;
+  core.int totalItems;
 
   /** Create new ProjectList from JSON data */
-  ProjectList.fromJson(Map json) {
+  ProjectList.fromJson(core.Map json) {
     if (json.containsKey("etag")) {
       etag = json["etag"];
     }
@@ -1502,8 +1511,8 @@ class ProjectList {
   }
 
   /** Create JSON Object for ProjectList */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (etag != null) {
       output["etag"] = etag;
@@ -1515,7 +1524,7 @@ class ProjectList {
       output["nextPageToken"] = nextPageToken;
     }
     if (projects != null) {
-      output["projects"] = new List();
+      output["projects"] = new core.List();
       projects.forEach((item) {
         output["projects"].add(item.toJson());
       });
@@ -1528,29 +1537,29 @@ class ProjectList {
   }
 
   /** Return String representation of ProjectList */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class ProjectListProjects {
 
   /** A descriptive name for this project. */
-  String friendlyName;
+  core.String friendlyName;
 
   /** An opaque ID of this project. */
-  String id;
+  core.String id;
 
   /** The resource type. */
-  String kind;
+  core.String kind;
 
   /** The numeric ID of this project. */
-  String numericId;
+  core.String numericId;
 
   /** A unique reference to this project. */
   ProjectReference projectReference;
 
   /** Create new ProjectListProjects from JSON data */
-  ProjectListProjects.fromJson(Map json) {
+  ProjectListProjects.fromJson(core.Map json) {
     if (json.containsKey("friendlyName")) {
       friendlyName = json["friendlyName"];
     }
@@ -1569,8 +1578,8 @@ class ProjectListProjects {
   }
 
   /** Create JSON Object for ProjectListProjects */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (friendlyName != null) {
       output["friendlyName"] = friendlyName;
@@ -1592,25 +1601,25 @@ class ProjectListProjects {
   }
 
   /** Return String representation of ProjectListProjects */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class ProjectReference {
 
   /** [Required] ID of the project. Can be either the numeric ID or the assigned ID of the project. */
-  String projectId;
+  core.String projectId;
 
   /** Create new ProjectReference from JSON data */
-  ProjectReference.fromJson(Map json) {
+  ProjectReference.fromJson(core.Map json) {
     if (json.containsKey("projectId")) {
       projectId = json["projectId"];
     }
   }
 
   /** Create JSON Object for ProjectReference */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (projectId != null) {
       output["projectId"] = projectId;
@@ -1620,7 +1629,7 @@ class ProjectReference {
   }
 
   /** Return String representation of ProjectReference */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
@@ -1630,25 +1639,25 @@ class QueryRequest {
   DatasetReference defaultDataset;
 
   /** [Optional] If set, don't actually run the query. A valid query will return an empty response, while an invalid query will return the same error it would if it wasn't a dry run. */
-  bool dryRun;
+  core.bool dryRun;
 
   /** The resource type of the request. */
-  String kind;
+  core.String kind;
 
   /** [Optional] The maximum number of results to return per page of results. If the response list exceeds the maximum response size for a single response, you will have to page through the results. Default is to return the maximum response size. */
-  int maxResults;
+  core.int maxResults;
 
   /** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. */
-  bool preserveNulls;
+  core.bool preserveNulls;
 
   /** [Required] A query string, following the BigQuery query syntax of the query to execute. Table names should be qualified by dataset name in the format projectId:datasetId.tableId unless you specify the defaultDataset value. If the table is in the same project as the job, you can omit the project ID. Example: SELECT f1 FROM myProjectId:myDatasetId.myTableId. */
-  String query;
+  core.String query;
 
   /** [Optional] How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error. */
-  int timeoutMs;
+  core.int timeoutMs;
 
   /** Create new QueryRequest from JSON data */
-  QueryRequest.fromJson(Map json) {
+  QueryRequest.fromJson(core.Map json) {
     if (json.containsKey("defaultDataset")) {
       defaultDataset = new DatasetReference.fromJson(json["defaultDataset"]);
     }
@@ -1673,8 +1682,8 @@ class QueryRequest {
   }
 
   /** Create JSON Object for QueryRequest */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (defaultDataset != null) {
       output["defaultDataset"] = defaultDataset.toJson();
@@ -1702,38 +1711,38 @@ class QueryRequest {
   }
 
   /** Return String representation of QueryRequest */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class QueryResponse {
 
   /** Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available. */
-  bool jobComplete;
+  core.bool jobComplete;
 
   /** Reference to the Job that was created to run the query. This field will be present even if the original request timed out, in which case GetQueryResults can be used to read the results once the query has completed. Since this API only returns the first page of results, subsequent pages can be fetched via the same mechanism (GetQueryResults). */
   JobReference jobReference;
 
   /** The resource type. */
-  String kind;
+  core.String kind;
 
   /** A token used for paging results. */
-  String pageToken;
+  core.String pageToken;
 
   /** An object with as many results as can be contained within the maximum permitted reply size. To get any additional rows, you can call GetQueryResults and specify the jobReference returned above. */
-  List<TableRow> rows;
+  core.List<TableRow> rows;
 
   /** The schema of the results. Present only when the query completes successfully. */
   TableSchema schema;
 
   /** The total number of bytes processed for this query. If this query was a dry run, this is the number of bytes that would be processed if the query were run. */
-  String totalBytesProcessed;
+  core.String totalBytesProcessed;
 
   /** The total number of rows in the complete query result set, which can be more than the number of rows in this single page of results. */
-  String totalRows;
+  core.String totalRows;
 
   /** Create new QueryResponse from JSON data */
-  QueryResponse.fromJson(Map json) {
+  QueryResponse.fromJson(core.Map json) {
     if (json.containsKey("jobComplete")) {
       jobComplete = json["jobComplete"];
     }
@@ -1764,8 +1773,8 @@ class QueryResponse {
   }
 
   /** Create JSON Object for QueryResponse */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (jobComplete != null) {
       output["jobComplete"] = jobComplete;
@@ -1780,7 +1789,7 @@ class QueryResponse {
       output["pageToken"] = pageToken;
     }
     if (rows != null) {
-      output["rows"] = new List();
+      output["rows"] = new core.List();
       rows.forEach((item) {
         output["rows"].add(item.toJson());
       });
@@ -1799,53 +1808,53 @@ class QueryResponse {
   }
 
   /** Return String representation of QueryResponse */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class Table {
 
   /** [Output-only] The time when this table was created, in milliseconds since the epoch. */
-  String creationTime;
+  core.String creationTime;
 
   /** [Optional] A user-friendly description of this table. */
-  String description;
+  core.String description;
 
   /** [Output-only] A hash of this resource. */
-  String etag;
+  core.String etag;
 
   /** [Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. */
-  String expirationTime;
+  core.String expirationTime;
 
   /** [Optional] A descriptive name for this table. */
-  String friendlyName;
+  core.String friendlyName;
 
   /** [Output-only] An opaque ID uniquely identifying the table. */
-  String id;
+  core.String id;
 
   /** [Output-only] The type of the resource. */
-  String kind;
+  core.String kind;
 
   /** [Output-only] The time when this table was last modified, in milliseconds since the epoch. */
-  String lastModifiedTime;
+  core.String lastModifiedTime;
 
   /** [Output-only] The size of the table in bytes. */
-  String numBytes;
+  core.String numBytes;
 
   /** [Output-only] The number of rows of data in this table. */
-  String numRows;
+  core.String numRows;
 
   /** [Optional] Describes the schema of this table. */
   TableSchema schema;
 
   /** [Output-only] A URL that can be used to access this resource again. */
-  String selfLink;
+  core.String selfLink;
 
   /** [Required] Reference describing the ID of this table. */
   TableReference tableReference;
 
   /** Create new Table from JSON data */
-  Table.fromJson(Map json) {
+  Table.fromJson(core.Map json) {
     if (json.containsKey("creationTime")) {
       creationTime = json["creationTime"];
     }
@@ -1888,8 +1897,8 @@ class Table {
   }
 
   /** Create JSON Object for Table */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (creationTime != null) {
       output["creationTime"] = creationTime;
@@ -1935,7 +1944,7 @@ class Table {
   }
 
   /** Return String representation of Table */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
@@ -1943,41 +1952,41 @@ class Table {
 class TableCell {
 
   /** Create new TableCell from JSON data */
-  TableCell.fromJson(Map json) {
+  TableCell.fromJson(core.Map json) {
   }
 
   /** Create JSON Object for TableCell */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
 
     return output;
   }
 
   /** Return String representation of TableCell */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class TableDataList {
 
   /** A hash of this page of results. */
-  String etag;
+  core.String etag;
 
   /** The resource type of the response. */
-  String kind;
+  core.String kind;
 
   /** A token used for paging results. Providing this token instead of the startRow parameter can help you retrieve stable results when an underlying table is changing. */
-  String pageToken;
+  core.String pageToken;
 
   /** Rows of results. */
-  List<TableRow> rows;
+  core.List<TableRow> rows;
 
   /** The total number of rows in the complete table. */
-  String totalRows;
+  core.String totalRows;
 
   /** Create new TableDataList from JSON data */
-  TableDataList.fromJson(Map json) {
+  TableDataList.fromJson(core.Map json) {
     if (json.containsKey("etag")) {
       etag = json["etag"];
     }
@@ -1999,8 +2008,8 @@ class TableDataList {
   }
 
   /** Create JSON Object for TableDataList */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (etag != null) {
       output["etag"] = etag;
@@ -2012,7 +2021,7 @@ class TableDataList {
       output["pageToken"] = pageToken;
     }
     if (rows != null) {
-      output["rows"] = new List();
+      output["rows"] = new core.List();
       rows.forEach((item) {
         output["rows"].add(item.toJson());
       });
@@ -2025,26 +2034,26 @@ class TableDataList {
   }
 
   /** Return String representation of TableDataList */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class TableFieldSchema {
 
   /** [Optional] Describes the nested schema fields if the type property is set to RECORD. */
-  List<TableFieldSchema> fields;
+  core.List<TableFieldSchema> fields;
 
   /** [Optional] The field mode. Possible values include NULLABLE, REQUIRED and REPEATED. The default value is NULLABLE. */
-  String mode;
+  core.String mode;
 
   /** [Required] The field name. */
-  String name;
+  core.String name;
 
   /** [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates a nested schema). */
-  String type;
+  core.String type;
 
   /** Create new TableFieldSchema from JSON data */
-  TableFieldSchema.fromJson(Map json) {
+  TableFieldSchema.fromJson(core.Map json) {
     if (json.containsKey("fields")) {
       fields = [];
       json["fields"].forEach((item) {
@@ -2063,11 +2072,11 @@ class TableFieldSchema {
   }
 
   /** Create JSON Object for TableFieldSchema */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (fields != null) {
-      output["fields"] = new List();
+      output["fields"] = new core.List();
       fields.forEach((item) {
         output["fields"].add(item.toJson());
       });
@@ -2086,29 +2095,29 @@ class TableFieldSchema {
   }
 
   /** Return String representation of TableFieldSchema */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class TableList {
 
   /** A hash of this page of results. */
-  String etag;
+  core.String etag;
 
   /** The type of list. */
-  String kind;
+  core.String kind;
 
   /** A token to request the next page of results. */
-  String nextPageToken;
+  core.String nextPageToken;
 
   /** Tables in the requested dataset. */
-  List<TableListTables> tables;
+  core.List<TableListTables> tables;
 
   /** The total number of tables in the dataset. */
-  int totalItems;
+  core.int totalItems;
 
   /** Create new TableList from JSON data */
-  TableList.fromJson(Map json) {
+  TableList.fromJson(core.Map json) {
     if (json.containsKey("etag")) {
       etag = json["etag"];
     }
@@ -2130,8 +2139,8 @@ class TableList {
   }
 
   /** Create JSON Object for TableList */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (etag != null) {
       output["etag"] = etag;
@@ -2143,7 +2152,7 @@ class TableList {
       output["nextPageToken"] = nextPageToken;
     }
     if (tables != null) {
-      output["tables"] = new List();
+      output["tables"] = new core.List();
       tables.forEach((item) {
         output["tables"].add(item.toJson());
       });
@@ -2156,26 +2165,26 @@ class TableList {
   }
 
   /** Return String representation of TableList */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class TableListTables {
 
   /** The user-friendly name for this table. */
-  String friendlyName;
+  core.String friendlyName;
 
   /** An opaque ID of the table */
-  String id;
+  core.String id;
 
   /** The resource type. */
-  String kind;
+  core.String kind;
 
   /** A reference uniquely identifying the table. */
   TableReference tableReference;
 
   /** Create new TableListTables from JSON data */
-  TableListTables.fromJson(Map json) {
+  TableListTables.fromJson(core.Map json) {
     if (json.containsKey("friendlyName")) {
       friendlyName = json["friendlyName"];
     }
@@ -2191,8 +2200,8 @@ class TableListTables {
   }
 
   /** Create JSON Object for TableListTables */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (friendlyName != null) {
       output["friendlyName"] = friendlyName;
@@ -2211,23 +2220,23 @@ class TableListTables {
   }
 
   /** Return String representation of TableListTables */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class TableReference {
 
   /** [Required] ID of the dataset containing the table. */
-  String datasetId;
+  core.String datasetId;
 
   /** [Required] ID of the project billed for storage of the table. */
-  String projectId;
+  core.String projectId;
 
   /** [Required] ID of the table. */
-  String tableId;
+  core.String tableId;
 
   /** Create new TableReference from JSON data */
-  TableReference.fromJson(Map json) {
+  TableReference.fromJson(core.Map json) {
     if (json.containsKey("datasetId")) {
       datasetId = json["datasetId"];
     }
@@ -2240,8 +2249,8 @@ class TableReference {
   }
 
   /** Create JSON Object for TableReference */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (datasetId != null) {
       output["datasetId"] = datasetId;
@@ -2257,16 +2266,16 @@ class TableReference {
   }
 
   /** Return String representation of TableReference */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 /** Represents a single row in the result set, consisting of one or more fields. */
 class TableRow {
-  List<TableCell> f;
+  core.List<TableCell> f;
 
   /** Create new TableRow from JSON data */
-  TableRow.fromJson(Map json) {
+  TableRow.fromJson(core.Map json) {
     if (json.containsKey("f")) {
       f = [];
       json["f"].forEach((item) {
@@ -2276,11 +2285,11 @@ class TableRow {
   }
 
   /** Create JSON Object for TableRow */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (f != null) {
-      output["f"] = new List();
+      output["f"] = new core.List();
       f.forEach((item) {
         output["f"].add(item.toJson());
       });
@@ -2290,17 +2299,17 @@ class TableRow {
   }
 
   /** Return String representation of TableRow */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 
 class TableSchema {
 
   /** Describes the fields in a table. */
-  List<TableFieldSchema> fields;
+  core.List<TableFieldSchema> fields;
 
   /** Create new TableSchema from JSON data */
-  TableSchema.fromJson(Map json) {
+  TableSchema.fromJson(core.Map json) {
     if (json.containsKey("fields")) {
       fields = [];
       json["fields"].forEach((item) {
@@ -2310,11 +2319,11 @@ class TableSchema {
   }
 
   /** Create JSON Object for TableSchema */
-  Map toJson() {
-    var output = new Map();
+  core.Map toJson() {
+    var output = new core.Map();
 
     if (fields != null) {
-      output["fields"] = new List();
+      output["fields"] = new core.List();
       fields.forEach((item) {
         output["fields"].add(item.toJson());
       });
@@ -2324,7 +2333,7 @@ class TableSchema {
   }
 
   /** Return String representation of TableSchema */
-  String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.stringify(this.toJson());
 
 }
 

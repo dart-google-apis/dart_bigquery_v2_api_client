@@ -16,13 +16,13 @@ class DatasetsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Map> delete(String projectId, String datasetId, {bool deleteContents, Map optParams}) {
-    var completer = new Completer();
+  async.Future<core.Map> delete(core.String projectId, core.String datasetId, {core.bool deleteContents, core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (deleteContents != null) queryParams["deleteContents"] = deleteContents;
@@ -58,13 +58,13 @@ class DatasetsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Dataset> get(String projectId, String datasetId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<Dataset> get(core.String projectId, core.String datasetId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -99,13 +99,13 @@ class DatasetsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Dataset> insert(Dataset request, String projectId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<Dataset> insert(Dataset request, core.String projectId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (projectId == null) paramErrors.add("projectId is required");
     if (projectId != null) urlParams["projectId"] = projectId;
     if (optParams != null) {
@@ -140,13 +140,13 @@ class DatasetsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<DatasetList> list(String projectId, {int maxResults, String pageToken, Map optParams}) {
-    var completer = new Completer();
+  async.Future<DatasetList> list(core.String projectId, {core.int maxResults, core.String pageToken, core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (maxResults != null) queryParams["maxResults"] = maxResults;
     if (pageToken != null) queryParams["pageToken"] = pageToken;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -183,13 +183,13 @@ class DatasetsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Dataset> patch(Dataset request, String projectId, String datasetId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<Dataset> patch(Dataset request, core.String projectId, core.String datasetId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -226,13 +226,13 @@ class DatasetsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Dataset> update(Dataset request, String projectId, String datasetId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<Dataset> update(Dataset request, core.String projectId, core.String datasetId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -273,13 +273,13 @@ class JobsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Job> get(String projectId, String jobId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<Job> get(core.String projectId, core.String jobId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/jobs/{jobId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (jobId == null) paramErrors.add("jobId is required");
     if (jobId != null) urlParams["jobId"] = jobId;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -322,13 +322,13 @@ class JobsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<GetQueryResultsResponse> getQueryResults(String projectId, String jobId, {int maxResults, String pageToken, String startIndex, int timeoutMs, Map optParams}) {
-    var completer = new Completer();
+  async.Future<GetQueryResultsResponse> getQueryResults(core.String projectId, core.String jobId, {core.int maxResults, core.String pageToken, core.String startIndex, core.int timeoutMs, core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/queries/{jobId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (jobId == null) paramErrors.add("jobId is required");
     if (jobId != null) urlParams["jobId"] = jobId;
     if (maxResults != null) queryParams["maxResults"] = maxResults;
@@ -371,14 +371,14 @@ class JobsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Job> insert(Job request, String projectId, {String content, String contentType, Map optParams}) {
-    var completer = new Completer();
+  async.Future<Job> insert(Job request, core.String projectId, {core.String content, core.String contentType, core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/jobs";
     var uploadUrl = "/upload/bigquery/v2/projects/{projectId}/jobs";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (projectId == null) paramErrors.add("projectId is required");
     if (projectId != null) urlParams["projectId"] = projectId;
     if (optParams != null) {
@@ -430,13 +430,13 @@ class JobsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<JobList> list(String projectId, {bool allUsers, int maxResults, String pageToken, String projection, String stateFilter, Map optParams}) {
-    var completer = new Completer();
+  async.Future<JobList> list(core.String projectId, {core.bool allUsers, core.int maxResults, core.String pageToken, core.String projection, core.String stateFilter, core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/jobs";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (allUsers != null) queryParams["allUsers"] = allUsers;
     if (maxResults != null) queryParams["maxResults"] = maxResults;
     if (pageToken != null) queryParams["pageToken"] = pageToken;
@@ -480,13 +480,13 @@ class JobsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<QueryResponse> query(QueryRequest request, String projectId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<QueryResponse> query(QueryRequest request, core.String projectId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/queries";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (projectId == null) paramErrors.add("projectId is required");
     if (projectId != null) urlParams["projectId"] = projectId;
     if (optParams != null) {
@@ -525,13 +525,13 @@ class ProjectsResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<ProjectList> list({int maxResults, String pageToken, Map optParams}) {
-    var completer = new Completer();
+  async.Future<ProjectList> list({core.int maxResults, core.String pageToken, core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (maxResults != null) queryParams["maxResults"] = maxResults;
     if (pageToken != null) queryParams["pageToken"] = pageToken;
     if (optParams != null) {
@@ -578,13 +578,13 @@ class TabledataResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<TableDataList> list(String projectId, String datasetId, String tableId, {int maxResults, String pageToken, String startIndex, Map optParams}) {
-    var completer = new Completer();
+  async.Future<TableDataList> list(core.String projectId, core.String datasetId, core.String tableId, {core.int maxResults, core.String pageToken, core.String startIndex, core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (maxResults != null) queryParams["maxResults"] = maxResults;
@@ -632,13 +632,13 @@ class TablesResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Map> delete(String projectId, String datasetId, String tableId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<core.Map> delete(core.String projectId, core.String datasetId, core.String tableId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -677,13 +677,13 @@ class TablesResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Table> get(String projectId, String datasetId, String tableId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<Table> get(core.String projectId, core.String datasetId, core.String tableId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -722,13 +722,13 @@ class TablesResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Table> insert(Table request, String projectId, String datasetId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<Table> insert(Table request, core.String projectId, core.String datasetId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -767,13 +767,13 @@ class TablesResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<TableList> list(String projectId, String datasetId, {int maxResults, String pageToken, Map optParams}) {
-    var completer = new Completer();
+  async.Future<TableList> list(core.String projectId, core.String datasetId, {core.int maxResults, core.String pageToken, core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (maxResults != null) queryParams["maxResults"] = maxResults;
@@ -814,13 +814,13 @@ class TablesResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Table> patch(Table request, String projectId, String datasetId, String tableId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<Table> patch(Table request, core.String projectId, core.String datasetId, core.String tableId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -861,13 +861,13 @@ class TablesResource extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  Future<Table> update(Table request, String projectId, String datasetId, String tableId, {Map optParams}) {
-    var completer = new Completer();
+  async.Future<Table> update(Table request, core.String projectId, core.String datasetId, core.String tableId, {core.Map optParams}) {
+    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}";
-    var urlParams = new Map();
-    var queryParams = new Map();
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
 
-    var paramErrors = new List();
+    var paramErrors = new core.List();
     if (datasetId == null) paramErrors.add("datasetId is required");
     if (datasetId != null) urlParams["datasetId"] = datasetId;
     if (projectId == null) paramErrors.add("projectId is required");
