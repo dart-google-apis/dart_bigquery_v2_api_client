@@ -1948,7 +1948,7 @@ class Table {
 
 }
 
-/** Represents a single cell in the result set. */
+/** Represents a single cell in the result set. Users of the java client can detect whether their value result is null by calling 'com.google.api.client.util.Data.isNull(cell.getV())'. */
 class TableCell {
 
   /** Create new TableCell from JSON data */
