@@ -4,16 +4,16 @@ part of bigquery_v2_api_console;
 /** A data platform for customers to create, manage, share and query data. */
 class Bigquery extends ConsoleClient {
 
-  DatasetsResource _datasets;
-  DatasetsResource get datasets => _datasets;
-  JobsResource _jobs;
-  JobsResource get jobs => _jobs;
-  ProjectsResource _projects;
-  ProjectsResource get projects => _projects;
-  TabledataResource _tabledata;
-  TabledataResource get tabledata => _tabledata;
-  TablesResource _tables;
-  TablesResource get tables => _tables;
+  DatasetsResource_ _datasets;
+  DatasetsResource_ get datasets => _datasets;
+  JobsResource_ _jobs;
+  JobsResource_ get jobs => _jobs;
+  ProjectsResource_ _projects;
+  ProjectsResource_ get projects => _projects;
+  TabledataResource_ _tabledata;
+  TabledataResource_ get tabledata => _tabledata;
+  TablesResource_ _tables;
+  TablesResource_ get tables => _tables;
 
   /** OAuth Scope2: View and manage your data in Google BigQuery */
   static const core.String BIGQUERY_SCOPE = "https://www.googleapis.com/auth/bigquery";
@@ -79,10 +79,10 @@ class Bigquery extends ConsoleClient {
   Bigquery([oauth2.OAuth2Console auth]) : super(auth) {
     basePath = "/bigquery/v2/";
     rootUrl = "https://www.googleapis.com:443/";
-    _datasets = new DatasetsResource(this);
-    _jobs = new JobsResource(this);
-    _projects = new ProjectsResource(this);
-    _tabledata = new TabledataResource(this);
-    _tables = new TablesResource(this);
+    _datasets = new DatasetsResource_(this);
+    _jobs = new JobsResource_(this);
+    _projects = new ProjectsResource_(this);
+    _tabledata = new TabledataResource_(this);
+    _tables = new TablesResource_(this);
   }
 }
