@@ -10,7 +10,7 @@ Each access object can have only one of the following members: userByEmail, grou
   core.List<DatasetAccess> access;
 
   /** [Output-only] The time when this dataset was created, in milliseconds since the epoch. */
-  core.String creationTime;
+  core.int creationTime;
 
   /** [Required] Reference identifying dataset. */
   DatasetReference datasetReference;
@@ -31,7 +31,7 @@ Each access object can have only one of the following members: userByEmail, grou
   core.String kind;
 
   /** [Output-only] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch. */
-  core.String lastModifiedTime;
+  core.int lastModifiedTime;
 
   /** [Output-only] An URL that can be used to access this resource again. You can use this URL in Get or Update requests to this resource. */
   core.String selfLink;
@@ -393,6 +393,9 @@ class ErrorProto {
 
 class GetQueryResultsResponse {
 
+  /** Whether the query result was fetched from the query cache. */
+  core.bool cacheHit;
+
   /** A hash of this response. */
   core.String etag;
 
@@ -419,6 +422,9 @@ class GetQueryResultsResponse {
 
   /** Create new GetQueryResultsResponse from JSON data */
   GetQueryResultsResponse.fromJson(core.Map json) {
+    if (json.containsKey("cacheHit")) {
+      cacheHit = json["cacheHit"];
+    }
     if (json.containsKey("etag")) {
       etag = json["etag"];
     }
@@ -452,6 +458,9 @@ class GetQueryResultsResponse {
   core.Map toJson() {
     var output = new core.Map();
 
+    if (cacheHit != null) {
+      output["cacheHit"] = cacheHit;
+    }
     if (etag != null) {
       output["etag"] = etag;
     }
@@ -779,6 +788,9 @@ class JobConfigurationLink {
 
 class JobConfigurationLoad {
 
+  /** [Optional] Accept rows that are missing trailing optional columns. The missing values are treated as nulls. Default is false which treats short rows as errors. Only applicable to CSV, ignored for other formats. */
+  core.bool allowJaggedRows;
+
   /** Indicates if BigQuery should allow quoted data sections that contain newline characters in a CSV file. The default value is false. */
   core.bool allowQuotedNewlines;
 
@@ -823,6 +835,9 @@ class JobConfigurationLoad {
 
   /** Create new JobConfigurationLoad from JSON data */
   JobConfigurationLoad.fromJson(core.Map json) {
+    if (json.containsKey("allowJaggedRows")) {
+      allowJaggedRows = json["allowJaggedRows"];
+    }
     if (json.containsKey("allowQuotedNewlines")) {
       allowQuotedNewlines = json["allowQuotedNewlines"];
     }
@@ -874,6 +889,9 @@ class JobConfigurationLoad {
   core.Map toJson() {
     var output = new core.Map();
 
+    if (allowJaggedRows != null) {
+      output["allowJaggedRows"] = allowJaggedRows;
+    }
     if (allowQuotedNewlines != null) {
       output["allowQuotedNewlines"] = allowQuotedNewlines;
     }
@@ -951,6 +969,9 @@ class JobConfigurationQuery {
   /** [Required] BigQuery SQL query to execute. */
   core.String query;
 
+  /** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. */
+  core.bool useQueryCache;
+
   /** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_EMPTY. */
   core.String writeDisposition;
 
@@ -976,6 +997,9 @@ class JobConfigurationQuery {
     }
     if (json.containsKey("query")) {
       query = json["query"];
+    }
+    if (json.containsKey("useQueryCache")) {
+      useQueryCache = json["useQueryCache"];
     }
     if (json.containsKey("writeDisposition")) {
       writeDisposition = json["writeDisposition"];
@@ -1006,6 +1030,9 @@ class JobConfigurationQuery {
     }
     if (query != null) {
       output["query"] = query;
+    }
+    if (useQueryCache != null) {
+      output["useQueryCache"] = useQueryCache;
     }
     if (writeDisposition != null) {
       output["writeDisposition"] = writeDisposition;
@@ -1275,7 +1302,7 @@ class JobReference {
 class JobStatistics {
 
   /** [Output-only] End time of this job, in milliseconds since the epoch. */
-  core.String endTime;
+  core.int endTime;
 
   /** [Output-only] Statistics for a load job. */
   JobStatistics3 load;
@@ -1284,10 +1311,10 @@ class JobStatistics {
   JobStatistics2 query;
 
   /** [Output-only] Start time of this job, in milliseconds since the epoch. */
-  core.String startTime;
+  core.int startTime;
 
   /** [Output-only] [Deprecated] Use the bytes processed in the query statistics instead. */
-  core.String totalBytesProcessed;
+  core.int totalBytesProcessed;
 
   /** Create new JobStatistics from JSON data */
   JobStatistics.fromJson(core.Map json) {
@@ -1338,11 +1365,17 @@ class JobStatistics {
 
 class JobStatistics2 {
 
+  /** [Output-only] Whether the query result was fetched from the query cache. */
+  core.bool cacheHit;
+
   /** [Output-only] Total bytes processed for this job. */
-  core.String totalBytesProcessed;
+  core.int totalBytesProcessed;
 
   /** Create new JobStatistics2 from JSON data */
   JobStatistics2.fromJson(core.Map json) {
+    if (json.containsKey("cacheHit")) {
+      cacheHit = json["cacheHit"];
+    }
     if (json.containsKey("totalBytesProcessed")) {
       totalBytesProcessed = json["totalBytesProcessed"];
     }
@@ -1352,6 +1385,9 @@ class JobStatistics2 {
   core.Map toJson() {
     var output = new core.Map();
 
+    if (cacheHit != null) {
+      output["cacheHit"] = cacheHit;
+    }
     if (totalBytesProcessed != null) {
       output["totalBytesProcessed"] = totalBytesProcessed;
     }
@@ -1367,16 +1403,16 @@ class JobStatistics2 {
 class JobStatistics3 {
 
   /** [Output-only] Number of bytes of source data in a joad job. */
-  core.String inputFileBytes;
+  core.int inputFileBytes;
 
   /** [Output-only] Number of source files in a load job. */
-  core.String inputFiles;
+  core.int inputFiles;
 
   /** [Output-only] Size of the loaded data in bytes. Note that while an import job is in the running state, this value may change. */
-  core.String outputBytes;
+  core.int outputBytes;
 
   /** [Output-only] Number of rows imported in a load job. Note that while an import job is in the running state, this value may change. */
-  core.String outputRows;
+  core.int outputRows;
 
   /** Create new JobStatistics3 from JSON data */
   JobStatistics3.fromJson(core.Map json) {
@@ -1656,6 +1692,9 @@ class QueryRequest {
   /** [Optional] How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error. */
   core.int timeoutMs;
 
+  /** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. */
+  core.bool useQueryCache;
+
   /** Create new QueryRequest from JSON data */
   QueryRequest.fromJson(core.Map json) {
     if (json.containsKey("defaultDataset")) {
@@ -1678,6 +1717,9 @@ class QueryRequest {
     }
     if (json.containsKey("timeoutMs")) {
       timeoutMs = json["timeoutMs"];
+    }
+    if (json.containsKey("useQueryCache")) {
+      useQueryCache = json["useQueryCache"];
     }
   }
 
@@ -1706,6 +1748,9 @@ class QueryRequest {
     if (timeoutMs != null) {
       output["timeoutMs"] = timeoutMs;
     }
+    if (useQueryCache != null) {
+      output["useQueryCache"] = useQueryCache;
+    }
 
     return output;
   }
@@ -1716,6 +1761,9 @@ class QueryRequest {
 }
 
 class QueryResponse {
+
+  /** Whether the query result was fetched from the query cache. */
+  core.bool cacheHit;
 
   /** Whether the query has completed or not. If rows or totalRows are present, this will always be true. If this is false, totalRows will not be available. */
   core.bool jobComplete;
@@ -1736,13 +1784,16 @@ class QueryResponse {
   TableSchema schema;
 
   /** The total number of bytes processed for this query. If this query was a dry run, this is the number of bytes that would be processed if the query were run. */
-  core.String totalBytesProcessed;
+  core.int totalBytesProcessed;
 
   /** The total number of rows in the complete query result set, which can be more than the number of rows in this single page of results. */
   core.String totalRows;
 
   /** Create new QueryResponse from JSON data */
   QueryResponse.fromJson(core.Map json) {
+    if (json.containsKey("cacheHit")) {
+      cacheHit = json["cacheHit"];
+    }
     if (json.containsKey("jobComplete")) {
       jobComplete = json["jobComplete"];
     }
@@ -1776,6 +1827,9 @@ class QueryResponse {
   core.Map toJson() {
     var output = new core.Map();
 
+    if (cacheHit != null) {
+      output["cacheHit"] = cacheHit;
+    }
     if (jobComplete != null) {
       output["jobComplete"] = jobComplete;
     }
@@ -1815,7 +1869,7 @@ class QueryResponse {
 class Table {
 
   /** [Output-only] The time when this table was created, in milliseconds since the epoch. */
-  core.String creationTime;
+  core.int creationTime;
 
   /** [Optional] A user-friendly description of this table. */
   core.String description;
@@ -1824,7 +1878,7 @@ class Table {
   core.String etag;
 
   /** [Optional] The time when this table expires, in milliseconds since the epoch. If not present, the table will persist indefinitely. Expired tables will be deleted and their storage reclaimed. */
-  core.String expirationTime;
+  core.int expirationTime;
 
   /** [Optional] A descriptive name for this table. */
   core.String friendlyName;
@@ -1836,10 +1890,10 @@ class Table {
   core.String kind;
 
   /** [Output-only] The time when this table was last modified, in milliseconds since the epoch. */
-  core.String lastModifiedTime;
+  core.int lastModifiedTime;
 
   /** [Output-only] The size of the table in bytes. */
-  core.String numBytes;
+  core.int numBytes;
 
   /** [Output-only] The number of rows of data in this table. */
   core.String numRows;
@@ -1983,7 +2037,7 @@ class TableDataList {
   core.List<TableRow> rows;
 
   /** The total number of rows in the complete table. */
-  core.String totalRows;
+  core.int totalRows;
 
   /** Create new TableDataList from JSON data */
   TableDataList.fromJson(core.Map json) {

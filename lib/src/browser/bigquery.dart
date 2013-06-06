@@ -78,7 +78,7 @@ class Bigquery extends BrowserClient {
 
   Bigquery([oauth.OAuth2 auth]) : super(auth) {
     basePath = "/bigquery/v2/";
-    rootUrl = "https://www.googleapis.com:443/";
+    rootUrl = "https://www.googleapis.com/";
     _datasets = new DatasetsResource_(this);
     _jobs = new JobsResource_(this);
     _projects = new ProjectsResource_(this);
