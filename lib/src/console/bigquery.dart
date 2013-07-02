@@ -18,6 +18,9 @@ class Bigquery extends ConsoleClient {
   /** OAuth Scope2: View and manage your data in Google BigQuery */
   static const core.String BIGQUERY_SCOPE = "https://www.googleapis.com/auth/bigquery";
 
+  /** OAuth Scope2: MESSAGE UNDER CONSTRUCTION View and manage your data across Google Cloud Platform services */
+  static const core.String CLOUD_PLATFORM_SCOPE = "https://www.googleapis.com/auth/cloud-platform";
+
   /** OAuth Scope2: Manage your data and permissions in Google Cloud Storage */
   static const core.String DEVSTORAGE_FULL_CONTROL_SCOPE = "https://www.googleapis.com/auth/devstorage.full_control";
 

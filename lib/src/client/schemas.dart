@@ -3,7 +3,7 @@ part of bigquery_v2_api_client;
 class Dataset {
 
   /** [Optional] Describes users' rights on the dataset. You can assign the same role to multiple users, and assign multiple roles to the same user.
-Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READ - Project readers WRITE - Project writers
+Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READER - Project readers WRITER - Project writers
 See ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.
 To revoke rights to a dataset, call datasets.update() and omit the names of anyone whose rights you wish to revoke. However, every dataset must have at least one entity granted OWNER role.
 Each access object can have only one of the following members: userByEmail, groupByEmail, domain, or allAuthenticatedUsers. */
@@ -45,7 +45,11 @@ Each access object can have only one of the following members: userByEmail, grou
       });
     }
     if (json.containsKey("creationTime")) {
-      creationTime = json["creationTime"];
+      if(json["creationTime"] is core.String){
+        creationTime = core.int.parse(json["creationTime"]);
+      }else{
+        creationTime = json["creationTime"];
+      }
     }
     if (json.containsKey("datasetReference")) {
       datasetReference = new DatasetReference.fromJson(json["datasetReference"]);
@@ -66,7 +70,11 @@ Each access object can have only one of the following members: userByEmail, grou
       kind = json["kind"];
     }
     if (json.containsKey("lastModifiedTime")) {
-      lastModifiedTime = json["lastModifiedTime"];
+      if(json["lastModifiedTime"] is core.String){
+        lastModifiedTime = core.int.parse(json["lastModifiedTime"]);
+      }else{
+        lastModifiedTime = json["lastModifiedTime"];
+      }
     }
     if (json.containsKey("selfLink")) {
       selfLink = json["selfLink"];
@@ -127,7 +135,7 @@ class DatasetAccess {
   /** [Pick one] A fully-qualified email address of a mailing list to grant access to. This must be either a Google Groups mailing list (ends in @googlegroups.com) or a group managed by an enterprise version of Google Groups. */
   core.String groupByEmail;
 
-  /** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READ - User can call any list() or get() method on any collection or resource. WRITE - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default. */
+  /** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER - User can call any list() or get() method on any collection or resource. WRITER - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default. */
   core.String role;
 
   /** [Pick one] A special group to grant access to. The valid values are: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. */
@@ -185,16 +193,16 @@ class DatasetAccess {
 
 class DatasetList {
 
-  /** An array of one or more summarized dataset resources. Absent when there are no datasets in the specified project. */
+  /** An array of the dataset resources in the project. Each resource contains basic information. For full information about a particular dataset resource, use the Datasets: get method. This property is omitted when there are no datasets in the project. */
   core.List<DatasetListDatasets> datasets;
 
-  /** A hash of this page of results. See Paging Through Results in the developer's guide. */
+  /** A hash value of the results page. You can use this property to determine if the page has changed since the last request. */
   core.String etag;
 
-  /** The type of list. */
+  /** The list type. This property always returns the value "bigquery#datasetList". */
   core.String kind;
 
-  /** A token to request the next page of results. Present only when there is more than one page of results.* See Paging Through Results in the developer's guide. */
+  /** A token that can be used to request the next results page. This property is omitted on the final results page. */
   core.String nextPageToken;
 
   /** Create new DatasetList from JSON data */
@@ -246,16 +254,16 @@ class DatasetList {
 
 class DatasetListDatasets {
 
-  /** Reference identifying dataset. */
+  /** The dataset reference. Use this property to access specific parts of the dataset's ID, such as project ID or dataset ID. */
   DatasetReference datasetReference;
 
-  /** A descriptive name for this dataset, if one exists. */
+  /** A descriptive name for the dataset, if one exists. */
   core.String friendlyName;
 
-  /** The fully-qualified unique name of this dataset in the format projectId:datasetId. */
+  /** The fully-qualified, unique, opaque ID of the dataset. */
   core.String id;
 
-  /** The resource type. */
+  /** The resource type. This property always returns the value "bigquery#dataset". */
   core.String kind;
 
   /** Create new DatasetListDatasets from JSON data */
@@ -338,16 +346,16 @@ class DatasetReference {
 
 class ErrorProto {
 
-  /** Debugging information for the service, if present. Should be ignored. */
+  /** Debugging information. This property is internal to Google and should not be used. */
   core.String debugInfo;
 
   /** Specifies where the error occurred, if present. */
   core.String location;
 
-  /** A human readable explanation of the error. */
+  /** A human-readable description of the error. */
   core.String message;
 
-  /** Specifies the error reason. For example, reason will be "required" or "invalid" if some field was missing or malformed. */
+  /** A short error code that summarizes the error. */
   core.String reason;
 
   /** Create new ErrorProto from JSON data */
@@ -960,6 +968,9 @@ class JobConfigurationQuery {
   /** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. */
   TableReference destinationTable;
 
+  /** [Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0. */
+  core.num minCompletionRatio;
+
   /** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. */
   core.bool preserveNulls;
 
@@ -988,6 +999,9 @@ class JobConfigurationQuery {
     }
     if (json.containsKey("destinationTable")) {
       destinationTable = new TableReference.fromJson(json["destinationTable"]);
+    }
+    if (json.containsKey("minCompletionRatio")) {
+      minCompletionRatio = json["minCompletionRatio"];
     }
     if (json.containsKey("preserveNulls")) {
       preserveNulls = json["preserveNulls"];
@@ -1021,6 +1035,9 @@ class JobConfigurationQuery {
     }
     if (destinationTable != null) {
       output["destinationTable"] = destinationTable.toJson();
+    }
+    if (minCompletionRatio != null) {
+      output["minCompletionRatio"] = minCompletionRatio;
     }
     if (preserveNulls != null) {
       output["preserveNulls"] = preserveNulls;
@@ -1319,7 +1336,11 @@ class JobStatistics {
   /** Create new JobStatistics from JSON data */
   JobStatistics.fromJson(core.Map json) {
     if (json.containsKey("endTime")) {
-      endTime = json["endTime"];
+      if(json["endTime"] is core.String){
+        endTime = core.int.parse(json["endTime"]);
+      }else{
+        endTime = json["endTime"];
+      }
     }
     if (json.containsKey("load")) {
       load = new JobStatistics3.fromJson(json["load"]);
@@ -1328,10 +1349,18 @@ class JobStatistics {
       query = new JobStatistics2.fromJson(json["query"]);
     }
     if (json.containsKey("startTime")) {
-      startTime = json["startTime"];
+      if(json["startTime"] is core.String){
+        startTime = core.int.parse(json["startTime"]);
+      }else{
+        startTime = json["startTime"];
+      }
     }
     if (json.containsKey("totalBytesProcessed")) {
-      totalBytesProcessed = json["totalBytesProcessed"];
+      if(json["totalBytesProcessed"] is core.String){
+        totalBytesProcessed = core.int.parse(json["totalBytesProcessed"]);
+      }else{
+        totalBytesProcessed = json["totalBytesProcessed"];
+      }
     }
   }
 
@@ -1368,6 +1397,9 @@ class JobStatistics2 {
   /** [Output-only] Whether the query result was fetched from the query cache. */
   core.bool cacheHit;
 
+  /** [Output-Only] Approximate fraction of data processed for this query. This will be 1.0 unless min_completion_ratio for the query was set to something other than 1.0. */
+  core.num completionRatio;
+
   /** [Output-only] Total bytes processed for this job. */
   core.int totalBytesProcessed;
 
@@ -1376,8 +1408,15 @@ class JobStatistics2 {
     if (json.containsKey("cacheHit")) {
       cacheHit = json["cacheHit"];
     }
+    if (json.containsKey("completionRatio")) {
+      completionRatio = json["completionRatio"];
+    }
     if (json.containsKey("totalBytesProcessed")) {
-      totalBytesProcessed = json["totalBytesProcessed"];
+      if(json["totalBytesProcessed"] is core.String){
+        totalBytesProcessed = core.int.parse(json["totalBytesProcessed"]);
+      }else{
+        totalBytesProcessed = json["totalBytesProcessed"];
+      }
     }
   }
 
@@ -1387,6 +1426,9 @@ class JobStatistics2 {
 
     if (cacheHit != null) {
       output["cacheHit"] = cacheHit;
+    }
+    if (completionRatio != null) {
+      output["completionRatio"] = completionRatio;
     }
     if (totalBytesProcessed != null) {
       output["totalBytesProcessed"] = totalBytesProcessed;
@@ -1417,16 +1459,32 @@ class JobStatistics3 {
   /** Create new JobStatistics3 from JSON data */
   JobStatistics3.fromJson(core.Map json) {
     if (json.containsKey("inputFileBytes")) {
-      inputFileBytes = json["inputFileBytes"];
+      if(json["inputFileBytes"] is core.String){
+        inputFileBytes = core.int.parse(json["inputFileBytes"]);
+      }else{
+        inputFileBytes = json["inputFileBytes"];
+      }
     }
     if (json.containsKey("inputFiles")) {
-      inputFiles = json["inputFiles"];
+      if(json["inputFiles"] is core.String){
+        inputFiles = core.int.parse(json["inputFiles"]);
+      }else{
+        inputFiles = json["inputFiles"];
+      }
     }
     if (json.containsKey("outputBytes")) {
-      outputBytes = json["outputBytes"];
+      if(json["outputBytes"] is core.String){
+        outputBytes = core.int.parse(json["outputBytes"]);
+      }else{
+        outputBytes = json["outputBytes"];
+      }
     }
     if (json.containsKey("outputRows")) {
-      outputRows = json["outputRows"];
+      if(json["outputRows"] is core.String){
+        outputRows = core.int.parse(json["outputRows"]);
+      }else{
+        outputRows = json["outputRows"];
+      }
     }
   }
 
@@ -1683,6 +1741,9 @@ class QueryRequest {
   /** [Optional] The maximum number of results to return per page of results. If the response list exceeds the maximum response size for a single response, you will have to page through the results. Default is to return the maximum response size. */
   core.int maxResults;
 
+  /** [Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0. */
+  core.num minCompletionRatio;
+
   /** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. */
   core.bool preserveNulls;
 
@@ -1708,6 +1769,9 @@ class QueryRequest {
     }
     if (json.containsKey("maxResults")) {
       maxResults = json["maxResults"];
+    }
+    if (json.containsKey("minCompletionRatio")) {
+      minCompletionRatio = json["minCompletionRatio"];
     }
     if (json.containsKey("preserveNulls")) {
       preserveNulls = json["preserveNulls"];
@@ -1738,6 +1802,9 @@ class QueryRequest {
     }
     if (maxResults != null) {
       output["maxResults"] = maxResults;
+    }
+    if (minCompletionRatio != null) {
+      output["minCompletionRatio"] = minCompletionRatio;
     }
     if (preserveNulls != null) {
       output["preserveNulls"] = preserveNulls;
@@ -1816,7 +1883,11 @@ class QueryResponse {
       schema = new TableSchema.fromJson(json["schema"]);
     }
     if (json.containsKey("totalBytesProcessed")) {
-      totalBytesProcessed = json["totalBytesProcessed"];
+      if(json["totalBytesProcessed"] is core.String){
+        totalBytesProcessed = core.int.parse(json["totalBytesProcessed"]);
+      }else{
+        totalBytesProcessed = json["totalBytesProcessed"];
+      }
     }
     if (json.containsKey("totalRows")) {
       totalRows = json["totalRows"];
@@ -1910,7 +1981,11 @@ class Table {
   /** Create new Table from JSON data */
   Table.fromJson(core.Map json) {
     if (json.containsKey("creationTime")) {
-      creationTime = json["creationTime"];
+      if(json["creationTime"] is core.String){
+        creationTime = core.int.parse(json["creationTime"]);
+      }else{
+        creationTime = json["creationTime"];
+      }
     }
     if (json.containsKey("description")) {
       description = json["description"];
@@ -1919,7 +1994,11 @@ class Table {
       etag = json["etag"];
     }
     if (json.containsKey("expirationTime")) {
-      expirationTime = json["expirationTime"];
+      if(json["expirationTime"] is core.String){
+        expirationTime = core.int.parse(json["expirationTime"]);
+      }else{
+        expirationTime = json["expirationTime"];
+      }
     }
     if (json.containsKey("friendlyName")) {
       friendlyName = json["friendlyName"];
@@ -1931,10 +2010,18 @@ class Table {
       kind = json["kind"];
     }
     if (json.containsKey("lastModifiedTime")) {
-      lastModifiedTime = json["lastModifiedTime"];
+      if(json["lastModifiedTime"] is core.String){
+        lastModifiedTime = core.int.parse(json["lastModifiedTime"]);
+      }else{
+        lastModifiedTime = json["lastModifiedTime"];
+      }
     }
     if (json.containsKey("numBytes")) {
-      numBytes = json["numBytes"];
+      if(json["numBytes"] is core.String){
+        numBytes = core.int.parse(json["numBytes"]);
+      }else{
+        numBytes = json["numBytes"];
+      }
     }
     if (json.containsKey("numRows")) {
       numRows = json["numRows"];
@@ -2057,7 +2144,11 @@ class TableDataList {
       });
     }
     if (json.containsKey("totalRows")) {
-      totalRows = json["totalRows"];
+      if(json["totalRows"] is core.String){
+        totalRows = core.int.parse(json["totalRows"]);
+      }else{
+        totalRows = json["totalRows"];
+      }
     }
   }
 
@@ -2103,7 +2194,7 @@ class TableFieldSchema {
   /** [Required] The field name. */
   core.String name;
 
-  /** [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates a nested schema). */
+  /** [Required] The field data type. Possible values include STRING, INTEGER, FLOAT, BOOLEAN, TIMESTAMP or RECORD (where RECORD indicates that the field contains a nested schema). */
   core.String type;
 
   /** Create new TableFieldSchema from JSON data */

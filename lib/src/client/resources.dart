@@ -17,7 +17,6 @@ class DatasetsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<core.Map> delete(core.String projectId, core.String datasetId, {core.bool deleteContents, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -37,16 +36,12 @@ class DatasetsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "DELETE", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(data))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response;
   }
 
   /**
@@ -59,7 +54,6 @@ class DatasetsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Dataset> get(core.String projectId, core.String datasetId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -78,16 +72,13 @@ class DatasetsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Dataset.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Dataset.fromJson(data));
   }
 
   /**
@@ -100,7 +91,6 @@ class DatasetsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Dataset> insert(Dataset request, core.String projectId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -117,16 +107,13 @@ class DatasetsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "POST", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Dataset.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Dataset.fromJson(data));
   }
 
   /**
@@ -141,7 +128,6 @@ class DatasetsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<DatasetList> list(core.String projectId, {core.int maxResults, core.String pageToken, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -160,16 +146,13 @@ class DatasetsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new DatasetList.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new DatasetList.fromJson(data));
   }
 
   /**
@@ -184,7 +167,6 @@ class DatasetsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Dataset> patch(Dataset request, core.String projectId, core.String datasetId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -203,16 +185,13 @@ class DatasetsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "PATCH", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Dataset.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Dataset.fromJson(data));
   }
 
   /**
@@ -227,7 +206,6 @@ class DatasetsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Dataset> update(Dataset request, core.String projectId, core.String datasetId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -246,16 +224,13 @@ class DatasetsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "PUT", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Dataset.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Dataset.fromJson(data));
   }
 }
 
@@ -274,7 +249,6 @@ class JobsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Job> get(core.String projectId, core.String jobId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/jobs/{jobId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -293,16 +267,13 @@ class JobsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Job.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Job.fromJson(data));
   }
 
   /**
@@ -323,7 +294,6 @@ class JobsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<GetQueryResultsResponse> getQueryResults(core.String projectId, core.String jobId, {core.int maxResults, core.String pageToken, core.String startIndex, core.int timeoutMs, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/queries/{jobId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -346,16 +316,13 @@ class JobsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new GetQueryResultsResponse.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new GetQueryResultsResponse.fromJson(data));
   }
 
   /**
@@ -372,7 +339,6 @@ class JobsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Job> insert(Job request, core.String projectId, {core.String content, core.String contentType, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/jobs";
     var uploadUrl = "/upload/bigquery/v2/projects/{projectId}/jobs";
     var urlParams = new core.Map();
@@ -390,8 +356,7 @@ class JobsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
@@ -400,10 +365,8 @@ class JobsResource_ extends Resource {
     } else {
       response = _client.request(url, "POST", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
     }
-    response
-      .then((data) => completer.complete(new Job.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Job.fromJson(data));
   }
 
   /**
@@ -431,7 +394,6 @@ class JobsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<JobList> list(core.String projectId, {core.bool allUsers, core.int maxResults, core.String pageToken, core.String projection, core.String stateFilter, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/jobs";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -459,16 +421,13 @@ class JobsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new JobList.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new JobList.fromJson(data));
   }
 
   /**
@@ -481,7 +440,6 @@ class JobsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<QueryResponse> query(QueryRequest request, core.String projectId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/queries";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -498,16 +456,13 @@ class JobsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "POST", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new QueryResponse.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new QueryResponse.fromJson(data));
   }
 }
 
@@ -526,7 +481,6 @@ class ProjectsResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<ProjectList> list({core.int maxResults, core.String pageToken, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -543,16 +497,13 @@ class ProjectsResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new ProjectList.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new ProjectList.fromJson(data));
   }
 }
 
@@ -579,7 +530,6 @@ class TabledataResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<TableDataList> list(core.String projectId, core.String datasetId, core.String tableId, {core.int maxResults, core.String pageToken, core.String startIndex, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -603,16 +553,13 @@ class TabledataResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new TableDataList.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new TableDataList.fromJson(data));
   }
 }
 
@@ -633,7 +580,6 @@ class TablesResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<core.Map> delete(core.String projectId, core.String datasetId, core.String tableId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -654,16 +600,12 @@ class TablesResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "DELETE", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(data))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response;
   }
 
   /**
@@ -678,7 +620,6 @@ class TablesResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Table> get(core.String projectId, core.String datasetId, core.String tableId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -699,16 +640,13 @@ class TablesResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Table.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Table.fromJson(data));
   }
 
   /**
@@ -723,7 +661,6 @@ class TablesResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Table> insert(Table request, core.String projectId, core.String datasetId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -742,16 +679,13 @@ class TablesResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "POST", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Table.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Table.fromJson(data));
   }
 
   /**
@@ -768,7 +702,6 @@ class TablesResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<TableList> list(core.String projectId, core.String datasetId, {core.int maxResults, core.String pageToken, core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -789,16 +722,13 @@ class TablesResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "GET", urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new TableList.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new TableList.fromJson(data));
   }
 
   /**
@@ -815,7 +745,6 @@ class TablesResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Table> patch(Table request, core.String projectId, core.String datasetId, core.String tableId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -836,16 +765,13 @@ class TablesResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "PATCH", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Table.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Table.fromJson(data));
   }
 
   /**
@@ -862,7 +788,6 @@ class TablesResource_ extends Resource {
    * [optParams] - Additional query parameters
    */
   async.Future<Table> update(Table request, core.String projectId, core.String datasetId, core.String tableId, {core.Map optParams}) {
-    var completer = new async.Completer();
     var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -883,16 +808,13 @@ class TablesResource_ extends Resource {
     }
 
     if (!paramErrors.isEmpty) {
-      completer.completeError(new core.ArgumentError(paramErrors.join(" / ")));
-      return completer.future;
+      throw new core.ArgumentError(paramErrors.join(" / "));
     }
 
     var response;
     response = _client.request(url, "PUT", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
-    response
-      .then((data) => completer.complete(new Table.fromJson(data)))
-      .catchError((e) { completer.completeError(e); return true; });
-    return completer.future;
+    return response
+      .then((data) => new Table.fromJson(data));
   }
 }
 
