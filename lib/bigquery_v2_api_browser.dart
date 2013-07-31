@@ -1,14 +1,29 @@
-library bigquery_v2_api_browser;
+library bigquery_v2_api.browser;
 
-import "bigquery_v2_api_client.dart";
-export "bigquery_v2_api_client.dart";
-
-import "dart:core" as core;
-import "dart:html" as html;
-import "dart:async" as async;
-import "dart:json" as JSON;
-import "package:js/js.dart" as js;
 import "package:google_oauth2_client/google_oauth2_browser.dart" as oauth;
 
-part "src/browser/browser_client.dart";
-part "src/browser/bigquery.dart";
+import 'package:google_bigquery_v2_api/src/cloud_api_browser.dart';
+import "package:google_bigquery_v2_api/bigquery_v2_api_client.dart";
+
+/** A data platform for customers to create, manage, share and query data. */
+class Bigquery extends Client with BrowserClient {
+
+  /** OAuth Scope2: View and manage your data in Google BigQuery */
+  static const String BIGQUERY_SCOPE = "https://www.googleapis.com/auth/bigquery";
+
+  /** OAuth Scope2: MESSAGE UNDER CONSTRUCTION View and manage your data across Google Cloud Platform services */
+  static const String CLOUD_PLATFORM_SCOPE = "https://www.googleapis.com/auth/cloud-platform";
+
+  /** OAuth Scope2: Manage your data and permissions in Google Cloud Storage */
+  static const String DEVSTORAGE_FULL_CONTROL_SCOPE = "https://www.googleapis.com/auth/devstorage.full_control";
+
+  /** OAuth Scope2: View your data in Google Cloud Storage */
+  static const String DEVSTORAGE_READ_ONLY_SCOPE = "https://www.googleapis.com/auth/devstorage.read_only";
+
+  /** OAuth Scope2: Manage your data in Google Cloud Storage */
+  static const String DEVSTORAGE_READ_WRITE_SCOPE = "https://www.googleapis.com/auth/devstorage.read_write";
+
+  final oauth.OAuth2 auth;
+
+  Bigquery([oauth.OAuth2 this.auth]);
+}

@@ -1,9 +1,11 @@
-part of bigquery_v2_api_client;
+part of bigquery_v2_api;
 
-class DatasetsResource_ extends Resource {
+class DatasetsResource_ {
 
-  DatasetsResource_(Client client) : super(client) {
-  }
+  final Client _client;
+
+  DatasetsResource_(Client client) :
+      _client = client;
 
   /**
    * Deletes the dataset specified by datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.
@@ -234,10 +236,12 @@ class DatasetsResource_ extends Resource {
   }
 }
 
-class JobsResource_ extends Resource {
+class JobsResource_ {
 
-  JobsResource_(Client client) : super(client) {
-  }
+  final Client _client;
+
+  JobsResource_(Client client) :
+      _client = client;
 
   /**
    * Retrieves the specified job by ID.
@@ -360,7 +364,7 @@ class JobsResource_ extends Resource {
     }
 
     var response;
-    if (?content && content != null) {
+    if (content != null) {
       response = _client.upload(uploadUrl, "POST", request.toString(), content, contentType, urlParams: urlParams, queryParams: queryParams);
     } else {
       response = _client.request(url, "POST", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
@@ -386,6 +390,7 @@ class JobsResource_ extends Resource {
    *     minimal - Does not include the job configuration
    *
    * [stateFilter] - Filter for job state
+   *   Repeated values: allowed
    *   Allowed values:
    *     done - Finished jobs
    *     pending - Pending jobs
@@ -393,7 +398,7 @@ class JobsResource_ extends Resource {
    *
    * [optParams] - Additional query parameters
    */
-  async.Future<JobList> list(core.String projectId, {core.bool allUsers, core.int maxResults, core.String pageToken, core.String projection, core.String stateFilter, core.Map optParams}) {
+  async.Future<JobList> list(core.String projectId, {core.bool allUsers, core.int maxResults, core.String pageToken, core.String projection, core.List<core.String> stateFilter, core.Map optParams}) {
     var url = "projects/{projectId}/jobs";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
@@ -466,10 +471,12 @@ class JobsResource_ extends Resource {
   }
 }
 
-class ProjectsResource_ extends Resource {
+class ProjectsResource_ {
 
-  ProjectsResource_(Client client) : super(client) {
-  }
+  final Client _client;
+
+  ProjectsResource_(Client client) :
+      _client = client;
 
   /**
    * Lists the projects to which you have at least read access.
@@ -507,10 +514,12 @@ class ProjectsResource_ extends Resource {
   }
 }
 
-class TabledataResource_ extends Resource {
+class TabledataResource_ {
 
-  TabledataResource_(Client client) : super(client) {
-  }
+  final Client _client;
+
+  TabledataResource_(Client client) :
+      _client = client;
 
   /**
    * Retrieves table data from a specified set of rows.
@@ -563,10 +572,12 @@ class TabledataResource_ extends Resource {
   }
 }
 
-class TablesResource_ extends Resource {
+class TablesResource_ {
 
-  TablesResource_(Client client) : super(client) {
-  }
+  final Client _client;
+
+  TablesResource_(Client client) :
+      _client = client;
 
   /**
    * Deletes the table specified by tableId from the dataset. If the table contains data, all the data will be deleted.

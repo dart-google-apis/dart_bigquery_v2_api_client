@@ -1,4 +1,4 @@
-part of bigquery_v2_api_client;
+part of bigquery_v2_api;
 
 class Dataset {
 
@@ -39,17 +39,10 @@ Each access object can have only one of the following members: userByEmail, grou
   /** Create new Dataset from JSON data */
   Dataset.fromJson(core.Map json) {
     if (json.containsKey("access")) {
-      access = [];
-      json["access"].forEach((item) {
-        access.add(new DatasetAccess.fromJson(item));
-      });
+      access = json["access"].map((accessItem) => new DatasetAccess.fromJson(accessItem)).toList();
     }
     if (json.containsKey("creationTime")) {
-      if(json["creationTime"] is core.String){
-        creationTime = core.int.parse(json["creationTime"]);
-      }else{
-        creationTime = json["creationTime"];
-      }
+      creationTime = (json["creationTime"] is core.String) ? core.int.parse(json["creationTime"]) : json["creationTime"];
     }
     if (json.containsKey("datasetReference")) {
       datasetReference = new DatasetReference.fromJson(json["datasetReference"]);
@@ -70,11 +63,7 @@ Each access object can have only one of the following members: userByEmail, grou
       kind = json["kind"];
     }
     if (json.containsKey("lastModifiedTime")) {
-      if(json["lastModifiedTime"] is core.String){
-        lastModifiedTime = core.int.parse(json["lastModifiedTime"]);
-      }else{
-        lastModifiedTime = json["lastModifiedTime"];
-      }
+      lastModifiedTime = (json["lastModifiedTime"] is core.String) ? core.int.parse(json["lastModifiedTime"]) : json["lastModifiedTime"];
     }
     if (json.containsKey("selfLink")) {
       selfLink = json["selfLink"];
@@ -86,10 +75,7 @@ Each access object can have only one of the following members: userByEmail, grou
     var output = new core.Map();
 
     if (access != null) {
-      output["access"] = new core.List();
-      access.forEach((item) {
-        output["access"].add(item.toJson());
-      });
+      output["access"] = access.map((accessItem) => accessItem.toJson()).toList();
     }
     if (creationTime != null) {
       output["creationTime"] = creationTime;
@@ -208,10 +194,7 @@ class DatasetList {
   /** Create new DatasetList from JSON data */
   DatasetList.fromJson(core.Map json) {
     if (json.containsKey("datasets")) {
-      datasets = [];
-      json["datasets"].forEach((item) {
-        datasets.add(new DatasetListDatasets.fromJson(item));
-      });
+      datasets = json["datasets"].map((datasetsItem) => new DatasetListDatasets.fromJson(datasetsItem)).toList();
     }
     if (json.containsKey("etag")) {
       etag = json["etag"];
@@ -229,10 +212,7 @@ class DatasetList {
     var output = new core.Map();
 
     if (datasets != null) {
-      output["datasets"] = new core.List();
-      datasets.forEach((item) {
-        output["datasets"].add(item.toJson());
-      });
+      output["datasets"] = datasets.map((datasetsItem) => datasetsItem.toJson()).toList();
     }
     if (etag != null) {
       output["etag"] = etag;
@@ -449,10 +429,7 @@ class GetQueryResultsResponse {
       pageToken = json["pageToken"];
     }
     if (json.containsKey("rows")) {
-      rows = [];
-      json["rows"].forEach((item) {
-        rows.add(new TableRow.fromJson(item));
-      });
+      rows = json["rows"].map((rowsItem) => new TableRow.fromJson(rowsItem)).toList();
     }
     if (json.containsKey("schema")) {
       schema = new TableSchema.fromJson(json["schema"]);
@@ -485,10 +462,7 @@ class GetQueryResultsResponse {
       output["pageToken"] = pageToken;
     }
     if (rows != null) {
-      output["rows"] = new core.List();
-      rows.forEach((item) {
-        output["rows"].add(item.toJson());
-      });
+      output["rows"] = rows.map((rowsItem) => rowsItem.toJson()).toList();
     }
     if (schema != null) {
       output["schema"] = schema.toJson();
@@ -756,10 +730,7 @@ class JobConfigurationLink {
       destinationTable = new TableReference.fromJson(json["destinationTable"]);
     }
     if (json.containsKey("sourceUri")) {
-      sourceUri = [];
-      json["sourceUri"].forEach((item) {
-        sourceUri.add(item);
-      });
+      sourceUri = json["sourceUri"].toList();
     }
     if (json.containsKey("writeDisposition")) {
       writeDisposition = json["writeDisposition"];
@@ -777,10 +748,7 @@ class JobConfigurationLink {
       output["destinationTable"] = destinationTable.toJson();
     }
     if (sourceUri != null) {
-      output["sourceUri"] = new core.List();
-      sourceUri.forEach((item) {
-        output["sourceUri"].add(item);
-      });
+      output["sourceUri"] = sourceUri.toList();
     }
     if (writeDisposition != null) {
       output["writeDisposition"] = writeDisposition;
@@ -883,10 +851,7 @@ class JobConfigurationLoad {
       sourceFormat = json["sourceFormat"];
     }
     if (json.containsKey("sourceUris")) {
-      sourceUris = [];
-      json["sourceUris"].forEach((item) {
-        sourceUris.add(item);
-      });
+      sourceUris = json["sourceUris"].toList();
     }
     if (json.containsKey("writeDisposition")) {
       writeDisposition = json["writeDisposition"];
@@ -937,10 +902,7 @@ class JobConfigurationLoad {
       output["sourceFormat"] = sourceFormat;
     }
     if (sourceUris != null) {
-      output["sourceUris"] = new core.List();
-      sourceUris.forEach((item) {
-        output["sourceUris"].add(item);
-      });
+      output["sourceUris"] = sourceUris.toList();
     }
     if (writeDisposition != null) {
       output["writeDisposition"] = writeDisposition;
@@ -1141,10 +1103,7 @@ class JobList {
       etag = json["etag"];
     }
     if (json.containsKey("jobs")) {
-      jobs = [];
-      json["jobs"].forEach((item) {
-        jobs.add(new JobListJobs.fromJson(item));
-      });
+      jobs = json["jobs"].map((jobsItem) => new JobListJobs.fromJson(jobsItem)).toList();
     }
     if (json.containsKey("kind")) {
       kind = json["kind"];
@@ -1165,10 +1124,7 @@ class JobList {
       output["etag"] = etag;
     }
     if (jobs != null) {
-      output["jobs"] = new core.List();
-      jobs.forEach((item) {
-        output["jobs"].add(item.toJson());
-      });
+      output["jobs"] = jobs.map((jobsItem) => jobsItem.toJson()).toList();
     }
     if (kind != null) {
       output["kind"] = kind;
@@ -1336,11 +1292,7 @@ class JobStatistics {
   /** Create new JobStatistics from JSON data */
   JobStatistics.fromJson(core.Map json) {
     if (json.containsKey("endTime")) {
-      if(json["endTime"] is core.String){
-        endTime = core.int.parse(json["endTime"]);
-      }else{
-        endTime = json["endTime"];
-      }
+      endTime = (json["endTime"] is core.String) ? core.int.parse(json["endTime"]) : json["endTime"];
     }
     if (json.containsKey("load")) {
       load = new JobStatistics3.fromJson(json["load"]);
@@ -1349,18 +1301,10 @@ class JobStatistics {
       query = new JobStatistics2.fromJson(json["query"]);
     }
     if (json.containsKey("startTime")) {
-      if(json["startTime"] is core.String){
-        startTime = core.int.parse(json["startTime"]);
-      }else{
-        startTime = json["startTime"];
-      }
+      startTime = (json["startTime"] is core.String) ? core.int.parse(json["startTime"]) : json["startTime"];
     }
     if (json.containsKey("totalBytesProcessed")) {
-      if(json["totalBytesProcessed"] is core.String){
-        totalBytesProcessed = core.int.parse(json["totalBytesProcessed"]);
-      }else{
-        totalBytesProcessed = json["totalBytesProcessed"];
-      }
+      totalBytesProcessed = (json["totalBytesProcessed"] is core.String) ? core.int.parse(json["totalBytesProcessed"]) : json["totalBytesProcessed"];
     }
   }
 
@@ -1412,11 +1356,7 @@ class JobStatistics2 {
       completionRatio = json["completionRatio"];
     }
     if (json.containsKey("totalBytesProcessed")) {
-      if(json["totalBytesProcessed"] is core.String){
-        totalBytesProcessed = core.int.parse(json["totalBytesProcessed"]);
-      }else{
-        totalBytesProcessed = json["totalBytesProcessed"];
-      }
+      totalBytesProcessed = (json["totalBytesProcessed"] is core.String) ? core.int.parse(json["totalBytesProcessed"]) : json["totalBytesProcessed"];
     }
   }
 
@@ -1459,32 +1399,16 @@ class JobStatistics3 {
   /** Create new JobStatistics3 from JSON data */
   JobStatistics3.fromJson(core.Map json) {
     if (json.containsKey("inputFileBytes")) {
-      if(json["inputFileBytes"] is core.String){
-        inputFileBytes = core.int.parse(json["inputFileBytes"]);
-      }else{
-        inputFileBytes = json["inputFileBytes"];
-      }
+      inputFileBytes = (json["inputFileBytes"] is core.String) ? core.int.parse(json["inputFileBytes"]) : json["inputFileBytes"];
     }
     if (json.containsKey("inputFiles")) {
-      if(json["inputFiles"] is core.String){
-        inputFiles = core.int.parse(json["inputFiles"]);
-      }else{
-        inputFiles = json["inputFiles"];
-      }
+      inputFiles = (json["inputFiles"] is core.String) ? core.int.parse(json["inputFiles"]) : json["inputFiles"];
     }
     if (json.containsKey("outputBytes")) {
-      if(json["outputBytes"] is core.String){
-        outputBytes = core.int.parse(json["outputBytes"]);
-      }else{
-        outputBytes = json["outputBytes"];
-      }
+      outputBytes = (json["outputBytes"] is core.String) ? core.int.parse(json["outputBytes"]) : json["outputBytes"];
     }
     if (json.containsKey("outputRows")) {
-      if(json["outputRows"] is core.String){
-        outputRows = core.int.parse(json["outputRows"]);
-      }else{
-        outputRows = json["outputRows"];
-      }
+      outputRows = (json["outputRows"] is core.String) ? core.int.parse(json["outputRows"]) : json["outputRows"];
     }
   }
 
@@ -1530,10 +1454,7 @@ class JobStatus {
       errorResult = new ErrorProto.fromJson(json["errorResult"]);
     }
     if (json.containsKey("errors")) {
-      errors = [];
-      json["errors"].forEach((item) {
-        errors.add(new ErrorProto.fromJson(item));
-      });
+      errors = json["errors"].map((errorsItem) => new ErrorProto.fromJson(errorsItem)).toList();
     }
     if (json.containsKey("state")) {
       state = json["state"];
@@ -1548,10 +1469,7 @@ class JobStatus {
       output["errorResult"] = errorResult.toJson();
     }
     if (errors != null) {
-      output["errors"] = new core.List();
-      errors.forEach((item) {
-        output["errors"].add(item.toJson());
-      });
+      output["errors"] = errors.map((errorsItem) => errorsItem.toJson()).toList();
     }
     if (state != null) {
       output["state"] = state;
@@ -1594,10 +1512,7 @@ class ProjectList {
       nextPageToken = json["nextPageToken"];
     }
     if (json.containsKey("projects")) {
-      projects = [];
-      json["projects"].forEach((item) {
-        projects.add(new ProjectListProjects.fromJson(item));
-      });
+      projects = json["projects"].map((projectsItem) => new ProjectListProjects.fromJson(projectsItem)).toList();
     }
     if (json.containsKey("totalItems")) {
       totalItems = json["totalItems"];
@@ -1618,10 +1533,7 @@ class ProjectList {
       output["nextPageToken"] = nextPageToken;
     }
     if (projects != null) {
-      output["projects"] = new core.List();
-      projects.forEach((item) {
-        output["projects"].add(item.toJson());
-      });
+      output["projects"] = projects.map((projectsItem) => projectsItem.toJson()).toList();
     }
     if (totalItems != null) {
       output["totalItems"] = totalItems;
@@ -1874,20 +1786,13 @@ class QueryResponse {
       pageToken = json["pageToken"];
     }
     if (json.containsKey("rows")) {
-      rows = [];
-      json["rows"].forEach((item) {
-        rows.add(new TableRow.fromJson(item));
-      });
+      rows = json["rows"].map((rowsItem) => new TableRow.fromJson(rowsItem)).toList();
     }
     if (json.containsKey("schema")) {
       schema = new TableSchema.fromJson(json["schema"]);
     }
     if (json.containsKey("totalBytesProcessed")) {
-      if(json["totalBytesProcessed"] is core.String){
-        totalBytesProcessed = core.int.parse(json["totalBytesProcessed"]);
-      }else{
-        totalBytesProcessed = json["totalBytesProcessed"];
-      }
+      totalBytesProcessed = (json["totalBytesProcessed"] is core.String) ? core.int.parse(json["totalBytesProcessed"]) : json["totalBytesProcessed"];
     }
     if (json.containsKey("totalRows")) {
       totalRows = json["totalRows"];
@@ -1914,10 +1819,7 @@ class QueryResponse {
       output["pageToken"] = pageToken;
     }
     if (rows != null) {
-      output["rows"] = new core.List();
-      rows.forEach((item) {
-        output["rows"].add(item.toJson());
-      });
+      output["rows"] = rows.map((rowsItem) => rowsItem.toJson()).toList();
     }
     if (schema != null) {
       output["schema"] = schema.toJson();
@@ -1981,11 +1883,7 @@ class Table {
   /** Create new Table from JSON data */
   Table.fromJson(core.Map json) {
     if (json.containsKey("creationTime")) {
-      if(json["creationTime"] is core.String){
-        creationTime = core.int.parse(json["creationTime"]);
-      }else{
-        creationTime = json["creationTime"];
-      }
+      creationTime = (json["creationTime"] is core.String) ? core.int.parse(json["creationTime"]) : json["creationTime"];
     }
     if (json.containsKey("description")) {
       description = json["description"];
@@ -1994,11 +1892,7 @@ class Table {
       etag = json["etag"];
     }
     if (json.containsKey("expirationTime")) {
-      if(json["expirationTime"] is core.String){
-        expirationTime = core.int.parse(json["expirationTime"]);
-      }else{
-        expirationTime = json["expirationTime"];
-      }
+      expirationTime = (json["expirationTime"] is core.String) ? core.int.parse(json["expirationTime"]) : json["expirationTime"];
     }
     if (json.containsKey("friendlyName")) {
       friendlyName = json["friendlyName"];
@@ -2010,18 +1904,10 @@ class Table {
       kind = json["kind"];
     }
     if (json.containsKey("lastModifiedTime")) {
-      if(json["lastModifiedTime"] is core.String){
-        lastModifiedTime = core.int.parse(json["lastModifiedTime"]);
-      }else{
-        lastModifiedTime = json["lastModifiedTime"];
-      }
+      lastModifiedTime = (json["lastModifiedTime"] is core.String) ? core.int.parse(json["lastModifiedTime"]) : json["lastModifiedTime"];
     }
     if (json.containsKey("numBytes")) {
-      if(json["numBytes"] is core.String){
-        numBytes = core.int.parse(json["numBytes"]);
-      }else{
-        numBytes = json["numBytes"];
-      }
+      numBytes = (json["numBytes"] is core.String) ? core.int.parse(json["numBytes"]) : json["numBytes"];
     }
     if (json.containsKey("numRows")) {
       numRows = json["numRows"];
@@ -2092,14 +1978,22 @@ class Table {
 /** Represents a single cell in the result set. Users of the java client can detect whether their value result is null by calling 'com.google.api.client.util.Data.isNull(cell.getV())'. */
 class TableCell {
 
+  core.Object v;
+
   /** Create new TableCell from JSON data */
   TableCell.fromJson(core.Map json) {
+    if (json.containsKey("v")) {
+      v = json["v"];
+    }
   }
 
   /** Create JSON Object for TableCell */
   core.Map toJson() {
     var output = new core.Map();
 
+    if (v != null) {
+      output["v"] = v;
+    }
 
     return output;
   }
@@ -2138,17 +2032,10 @@ class TableDataList {
       pageToken = json["pageToken"];
     }
     if (json.containsKey("rows")) {
-      rows = [];
-      json["rows"].forEach((item) {
-        rows.add(new TableRow.fromJson(item));
-      });
+      rows = json["rows"].map((rowsItem) => new TableRow.fromJson(rowsItem)).toList();
     }
     if (json.containsKey("totalRows")) {
-      if(json["totalRows"] is core.String){
-        totalRows = core.int.parse(json["totalRows"]);
-      }else{
-        totalRows = json["totalRows"];
-      }
+      totalRows = (json["totalRows"] is core.String) ? core.int.parse(json["totalRows"]) : json["totalRows"];
     }
   }
 
@@ -2166,10 +2053,7 @@ class TableDataList {
       output["pageToken"] = pageToken;
     }
     if (rows != null) {
-      output["rows"] = new core.List();
-      rows.forEach((item) {
-        output["rows"].add(item.toJson());
-      });
+      output["rows"] = rows.map((rowsItem) => rowsItem.toJson()).toList();
     }
     if (totalRows != null) {
       output["totalRows"] = totalRows;
@@ -2200,10 +2084,7 @@ class TableFieldSchema {
   /** Create new TableFieldSchema from JSON data */
   TableFieldSchema.fromJson(core.Map json) {
     if (json.containsKey("fields")) {
-      fields = [];
-      json["fields"].forEach((item) {
-        fields.add(new TableFieldSchema.fromJson(item));
-      });
+      fields = json["fields"].map((fieldsItem) => new TableFieldSchema.fromJson(fieldsItem)).toList();
     }
     if (json.containsKey("mode")) {
       mode = json["mode"];
@@ -2221,10 +2102,7 @@ class TableFieldSchema {
     var output = new core.Map();
 
     if (fields != null) {
-      output["fields"] = new core.List();
-      fields.forEach((item) {
-        output["fields"].add(item.toJson());
-      });
+      output["fields"] = fields.map((fieldsItem) => fieldsItem.toJson()).toList();
     }
     if (mode != null) {
       output["mode"] = mode;
@@ -2273,10 +2151,7 @@ class TableList {
       nextPageToken = json["nextPageToken"];
     }
     if (json.containsKey("tables")) {
-      tables = [];
-      json["tables"].forEach((item) {
-        tables.add(new TableListTables.fromJson(item));
-      });
+      tables = json["tables"].map((tablesItem) => new TableListTables.fromJson(tablesItem)).toList();
     }
     if (json.containsKey("totalItems")) {
       totalItems = json["totalItems"];
@@ -2297,10 +2172,7 @@ class TableList {
       output["nextPageToken"] = nextPageToken;
     }
     if (tables != null) {
-      output["tables"] = new core.List();
-      tables.forEach((item) {
-        output["tables"].add(item.toJson());
-      });
+      output["tables"] = tables.map((tablesItem) => tablesItem.toJson()).toList();
     }
     if (totalItems != null) {
       output["totalItems"] = totalItems;
@@ -2417,15 +2289,13 @@ class TableReference {
 
 /** Represents a single row in the result set, consisting of one or more fields. */
 class TableRow {
+
   core.List<TableCell> f;
 
   /** Create new TableRow from JSON data */
   TableRow.fromJson(core.Map json) {
     if (json.containsKey("f")) {
-      f = [];
-      json["f"].forEach((item) {
-        f.add(new TableCell.fromJson(item));
-      });
+      f = json["f"].map((fItem) => new TableCell.fromJson(fItem)).toList();
     }
   }
 
@@ -2434,10 +2304,7 @@ class TableRow {
     var output = new core.Map();
 
     if (f != null) {
-      output["f"] = new core.List();
-      f.forEach((item) {
-        output["f"].add(item.toJson());
-      });
+      output["f"] = f.map((fItem) => fItem.toJson()).toList();
     }
 
     return output;
@@ -2456,10 +2323,7 @@ class TableSchema {
   /** Create new TableSchema from JSON data */
   TableSchema.fromJson(core.Map json) {
     if (json.containsKey("fields")) {
-      fields = [];
-      json["fields"].forEach((item) {
-        fields.add(new TableFieldSchema.fromJson(item));
-      });
+      fields = json["fields"].map((fieldsItem) => new TableFieldSchema.fromJson(fieldsItem)).toList();
     }
   }
 
@@ -2468,10 +2332,7 @@ class TableSchema {
     var output = new core.Map();
 
     if (fields != null) {
-      output["fields"] = new core.List();
-      fields.forEach((item) {
-        output["fields"].add(item.toJson());
-      });
+      output["fields"] = fields.map((fieldsItem) => fieldsItem.toJson()).toList();
     }
 
     return output;
@@ -2482,3 +2343,16 @@ class TableSchema {
 
 }
 
+core.Map _mapMap(core.Map source, [core.Object convert(core.Object source) = null]) {
+  assert(source != null);
+  var result = new dart_collection.LinkedHashMap();
+  source.forEach((core.String key, value) {
+    assert(key != null);
+    if(convert == null) {
+      result[key] = value;
+    } else {
+      result[key] = convert(value);
+    }
+  });
+  return result;
+}
