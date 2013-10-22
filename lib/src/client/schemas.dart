@@ -109,7 +109,7 @@ Each access object can have only one of the following members: userByEmail, grou
   }
 
   /** Return String representation of Dataset */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -173,7 +173,7 @@ class DatasetAccess {
   }
 
   /** Return String representation of DatasetAccess */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -228,7 +228,7 @@ class DatasetList {
   }
 
   /** Return String representation of DatasetList */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -283,7 +283,7 @@ class DatasetListDatasets {
   }
 
   /** Return String representation of DatasetListDatasets */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -320,7 +320,7 @@ class DatasetReference {
   }
 
   /** Return String representation of DatasetReference */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -375,7 +375,7 @@ class ErrorProto {
   }
 
   /** Return String representation of ErrorProto */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -475,7 +475,7 @@ class GetQueryResultsResponse {
   }
 
   /** Return String representation of GetQueryResultsResponse */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -566,7 +566,7 @@ class Job {
   }
 
   /** Return String representation of Job */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -639,7 +639,7 @@ class JobConfiguration {
   }
 
   /** Return String representation of JobConfiguration */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -703,7 +703,7 @@ class JobConfigurationExtract {
   }
 
   /** Return String representation of JobConfigurationExtract */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -758,7 +758,7 @@ class JobConfigurationLink {
   }
 
   /** Return String representation of JobConfigurationLink */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -912,7 +912,7 @@ class JobConfigurationLoad {
   }
 
   /** Return String representation of JobConfigurationLoad */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -929,9 +929,6 @@ class JobConfigurationQuery {
 
   /** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. */
   TableReference destinationTable;
-
-  /** [Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0. */
-  core.num minCompletionRatio;
 
   /** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. */
   core.bool preserveNulls;
@@ -961,9 +958,6 @@ class JobConfigurationQuery {
     }
     if (json.containsKey("destinationTable")) {
       destinationTable = new TableReference.fromJson(json["destinationTable"]);
-    }
-    if (json.containsKey("minCompletionRatio")) {
-      minCompletionRatio = json["minCompletionRatio"];
     }
     if (json.containsKey("preserveNulls")) {
       preserveNulls = json["preserveNulls"];
@@ -998,9 +992,6 @@ class JobConfigurationQuery {
     if (destinationTable != null) {
       output["destinationTable"] = destinationTable.toJson();
     }
-    if (minCompletionRatio != null) {
-      output["minCompletionRatio"] = minCompletionRatio;
-    }
     if (preserveNulls != null) {
       output["preserveNulls"] = preserveNulls;
     }
@@ -1021,7 +1012,7 @@ class JobConfigurationQuery {
   }
 
   /** Return String representation of JobConfigurationQuery */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1076,7 +1067,7 @@ class JobConfigurationTableCopy {
   }
 
   /** Return String representation of JobConfigurationTableCopy */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1140,7 +1131,7 @@ class JobList {
   }
 
   /** Return String representation of JobList */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1231,7 +1222,7 @@ class JobListJobs {
   }
 
   /** Return String representation of JobListJobs */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1268,13 +1259,16 @@ class JobReference {
   }
 
   /** Return String representation of JobReference */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
 class JobStatistics {
 
-  /** [Output-only] End time of this job, in milliseconds since the epoch. */
+  /** [Output-only] Creation time of this job, in milliseconds since the epoch. This field will be present on all jobs. */
+  core.int creationTime;
+
+  /** [Output-only] End time of this job, in milliseconds since the epoch. This field will be present whenever a job is in the DONE state. */
   core.int endTime;
 
   /** [Output-only] Statistics for a load job. */
@@ -1283,7 +1277,7 @@ class JobStatistics {
   /** [Output-only] Statistics for a query job. */
   JobStatistics2 query;
 
-  /** [Output-only] Start time of this job, in milliseconds since the epoch. */
+  /** [Output-only] Start time of this job, in milliseconds since the epoch. This field will be present when the job transitions from the PENDING state to either RUNNING or DONE. */
   core.int startTime;
 
   /** [Output-only] [Deprecated] Use the bytes processed in the query statistics instead. */
@@ -1291,6 +1285,9 @@ class JobStatistics {
 
   /** Create new JobStatistics from JSON data */
   JobStatistics.fromJson(core.Map json) {
+    if (json.containsKey("creationTime")) {
+      creationTime = (json["creationTime"] is core.String) ? core.int.parse(json["creationTime"]) : json["creationTime"];
+    }
     if (json.containsKey("endTime")) {
       endTime = (json["endTime"] is core.String) ? core.int.parse(json["endTime"]) : json["endTime"];
     }
@@ -1312,6 +1309,9 @@ class JobStatistics {
   core.Map toJson() {
     var output = new core.Map();
 
+    if (creationTime != null) {
+      output["creationTime"] = creationTime;
+    }
     if (endTime != null) {
       output["endTime"] = endTime;
     }
@@ -1332,7 +1332,7 @@ class JobStatistics {
   }
 
   /** Return String representation of JobStatistics */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1341,9 +1341,6 @@ class JobStatistics2 {
   /** [Output-only] Whether the query result was fetched from the query cache. */
   core.bool cacheHit;
 
-  /** [Output-Only] Approximate fraction of data processed for this query. This will be 1.0 unless min_completion_ratio for the query was set to something other than 1.0. */
-  core.num completionRatio;
-
   /** [Output-only] Total bytes processed for this job. */
   core.int totalBytesProcessed;
 
@@ -1351,9 +1348,6 @@ class JobStatistics2 {
   JobStatistics2.fromJson(core.Map json) {
     if (json.containsKey("cacheHit")) {
       cacheHit = json["cacheHit"];
-    }
-    if (json.containsKey("completionRatio")) {
-      completionRatio = json["completionRatio"];
     }
     if (json.containsKey("totalBytesProcessed")) {
       totalBytesProcessed = (json["totalBytesProcessed"] is core.String) ? core.int.parse(json["totalBytesProcessed"]) : json["totalBytesProcessed"];
@@ -1367,9 +1361,6 @@ class JobStatistics2 {
     if (cacheHit != null) {
       output["cacheHit"] = cacheHit;
     }
-    if (completionRatio != null) {
-      output["completionRatio"] = completionRatio;
-    }
     if (totalBytesProcessed != null) {
       output["totalBytesProcessed"] = totalBytesProcessed;
     }
@@ -1378,7 +1369,7 @@ class JobStatistics2 {
   }
 
   /** Return String representation of JobStatistics2 */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1433,7 +1424,7 @@ class JobStatistics3 {
   }
 
   /** Return String representation of JobStatistics3 */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1479,7 +1470,46 @@ class JobStatus {
   }
 
   /** Return String representation of JobStatus */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
+
+}
+
+/** Represents a single JSON object. */
+class JsonObject {
+
+  /** Create new JsonObject from JSON data */
+  JsonObject.fromJson(core.Map json) {
+  }
+
+  /** Create JSON Object for JsonObject */
+  core.Map toJson() {
+    var output = new core.Map();
+
+
+    return output;
+  }
+
+  /** Return String representation of JsonObject */
+  core.String toString() => JSON.encode(this.toJson());
+
+}
+
+class JsonValue {
+
+  /** Create new JsonValue from JSON data */
+  JsonValue.fromJson(core.Map json) {
+  }
+
+  /** Create JSON Object for JsonValue */
+  core.Map toJson() {
+    var output = new core.Map();
+
+
+    return output;
+  }
+
+  /** Return String representation of JsonValue */
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1543,7 +1573,7 @@ class ProjectList {
   }
 
   /** Return String representation of ProjectList */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1607,7 +1637,7 @@ class ProjectListProjects {
   }
 
   /** Return String representation of ProjectListProjects */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1635,37 +1665,34 @@ class ProjectReference {
   }
 
   /** Return String representation of ProjectReference */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
 class QueryRequest {
 
-  /** [Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be fully-qualified in the format projectId:datasetId.tableid. */
+  /** [Optional] Specifies the default datasetId and projectId to assume for any unqualified table names in the query. If not set, all table names in the query string must be qualified in the format 'datasetId.tableId'. */
   DatasetReference defaultDataset;
 
-  /** [Optional] If set, don't actually run the query. A valid query will return an empty response, while an invalid query will return the same error it would if it wasn't a dry run. */
+  /** [Optional] If set, don't actually run the query. A valid query will return an empty response, while an invalid query will return the same error it would if it wasn't a dry run. The default value is false. */
   core.bool dryRun;
 
   /** The resource type of the request. */
   core.String kind;
 
-  /** [Optional] The maximum number of results to return per page of results. If the response list exceeds the maximum response size for a single response, you will have to page through the results. Default is to return the maximum response size. */
+  /** [Optional] The maximum number of rows of data to return per page of results. Setting this flag to a small value such as 1000 and then paging through results might improve reliability when the query result set is large. In addition to this limit, responses are also limited to 10 MB. By default, there is no maximum row count, and only the byte limit applies. */
   core.int maxResults;
 
-  /** [Experimental] Specifies the the minimum fraction of data that must be scanned before a query returns. This should be specified as a value between 0.0 and 1.0 inclusive. The default value is 1.0. */
-  core.num minCompletionRatio;
-
-  /** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. */
+  /** [Deprecated] If set to false, maps null values in the query response to the column's default value. Only specify if you have older code that can not handle null values in the query response. The default value is true. This flag is deprecated and will be ignored in a future version of BigQuery. */
   core.bool preserveNulls;
 
-  /** [Required] A query string, following the BigQuery query syntax of the query to execute. Table names should be qualified by dataset name in the format projectId:datasetId.tableId unless you specify the defaultDataset value. If the table is in the same project as the job, you can omit the project ID. Example: SELECT f1 FROM myProjectId:myDatasetId.myTableId. */
+  /** [Required] A query string, following the BigQuery query syntax, of the query to execute. Example: "SELECT count(f1) FROM [myProjectId:myDatasetId.myTableId]". */
   core.String query;
 
-  /** [Optional] How long to wait for the query to complete, in milliseconds, before returning. Default is to return immediately. If the timeout passes before the job completes, the request will fail with a TIMEOUT error. */
+  /** [Optional] How long to wait for the query to complete, in milliseconds, before the request times out and returns. Note that this is only a timeout for the request, not the query. If the query takes longer to run than the timeout value, the call returns without any results and with the 'jobComplete' flag set to false. You can call GetQueryResults() to wait for the query to complete and read the results. The default value is 10000 milliseconds (10 seconds). */
   core.int timeoutMs;
 
-  /** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. */
+  /** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. The default value is true. */
   core.bool useQueryCache;
 
   /** Create new QueryRequest from JSON data */
@@ -1681,9 +1708,6 @@ class QueryRequest {
     }
     if (json.containsKey("maxResults")) {
       maxResults = json["maxResults"];
-    }
-    if (json.containsKey("minCompletionRatio")) {
-      minCompletionRatio = json["minCompletionRatio"];
     }
     if (json.containsKey("preserveNulls")) {
       preserveNulls = json["preserveNulls"];
@@ -1715,9 +1739,6 @@ class QueryRequest {
     if (maxResults != null) {
       output["maxResults"] = maxResults;
     }
-    if (minCompletionRatio != null) {
-      output["minCompletionRatio"] = minCompletionRatio;
-    }
     if (preserveNulls != null) {
       output["preserveNulls"] = preserveNulls;
     }
@@ -1735,7 +1756,7 @@ class QueryRequest {
   }
 
   /** Return String representation of QueryRequest */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1835,7 +1856,7 @@ class QueryResponse {
   }
 
   /** Return String representation of QueryResponse */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1971,7 +1992,7 @@ class Table {
   }
 
   /** Return String representation of Table */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -1999,7 +2020,155 @@ class TableCell {
   }
 
   /** Return String representation of TableCell */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
+
+}
+
+class TableDataInsertAllRequest {
+
+  /** The resource type of the response. */
+  core.String kind;
+
+  /** The rows to insert. */
+  core.List<TableDataInsertAllRequestRows> rows;
+
+  /** Create new TableDataInsertAllRequest from JSON data */
+  TableDataInsertAllRequest.fromJson(core.Map json) {
+    if (json.containsKey("kind")) {
+      kind = json["kind"];
+    }
+    if (json.containsKey("rows")) {
+      rows = json["rows"].map((rowsItem) => new TableDataInsertAllRequestRows.fromJson(rowsItem)).toList();
+    }
+  }
+
+  /** Create JSON Object for TableDataInsertAllRequest */
+  core.Map toJson() {
+    var output = new core.Map();
+
+    if (kind != null) {
+      output["kind"] = kind;
+    }
+    if (rows != null) {
+      output["rows"] = rows.map((rowsItem) => rowsItem.toJson()).toList();
+    }
+
+    return output;
+  }
+
+  /** Return String representation of TableDataInsertAllRequest */
+  core.String toString() => JSON.encode(this.toJson());
+
+}
+
+class TableDataInsertAllRequestRows {
+
+  /** [Optional] A unique ID for each row. BigQuery uses this property to detect duplicate insertion requests on a best-effort basis. */
+  core.String insertId;
+
+  /** [Required] A JSON object that contains a row of data. The object's properties and values must match the destination table's schema. */
+  JsonObject json;
+
+  /** Create new TableDataInsertAllRequestRows from JSON data */
+  TableDataInsertAllRequestRows.fromJson(core.Map json) {
+    if (json.containsKey("insertId")) {
+      insertId = json["insertId"];
+    }
+    if (json.containsKey("json")) {
+      json = new JsonObject.fromJson(json["json"]);
+    }
+  }
+
+  /** Create JSON Object for TableDataInsertAllRequestRows */
+  core.Map toJson() {
+    var output = new core.Map();
+
+    if (insertId != null) {
+      output["insertId"] = insertId;
+    }
+    if (json != null) {
+      output["json"] = json.toJson();
+    }
+
+    return output;
+  }
+
+  /** Return String representation of TableDataInsertAllRequestRows */
+  core.String toString() => JSON.encode(this.toJson());
+
+}
+
+class TableDataInsertAllResponse {
+
+  /** An array of errors for rows that were not inserted. */
+  core.List<TableDataInsertAllResponseInsertErrors> insertErrors;
+
+  /** The resource type of the response. */
+  core.String kind;
+
+  /** Create new TableDataInsertAllResponse from JSON data */
+  TableDataInsertAllResponse.fromJson(core.Map json) {
+    if (json.containsKey("insertErrors")) {
+      insertErrors = json["insertErrors"].map((insertErrorsItem) => new TableDataInsertAllResponseInsertErrors.fromJson(insertErrorsItem)).toList();
+    }
+    if (json.containsKey("kind")) {
+      kind = json["kind"];
+    }
+  }
+
+  /** Create JSON Object for TableDataInsertAllResponse */
+  core.Map toJson() {
+    var output = new core.Map();
+
+    if (insertErrors != null) {
+      output["insertErrors"] = insertErrors.map((insertErrorsItem) => insertErrorsItem.toJson()).toList();
+    }
+    if (kind != null) {
+      output["kind"] = kind;
+    }
+
+    return output;
+  }
+
+  /** Return String representation of TableDataInsertAllResponse */
+  core.String toString() => JSON.encode(this.toJson());
+
+}
+
+class TableDataInsertAllResponseInsertErrors {
+
+  /** Error information for the row indicated by the index property. */
+  core.List<ErrorProto> errors;
+
+  /** The index of the row that error applies to. */
+  core.int index;
+
+  /** Create new TableDataInsertAllResponseInsertErrors from JSON data */
+  TableDataInsertAllResponseInsertErrors.fromJson(core.Map json) {
+    if (json.containsKey("errors")) {
+      errors = json["errors"].map((errorsItem) => new ErrorProto.fromJson(errorsItem)).toList();
+    }
+    if (json.containsKey("index")) {
+      index = json["index"];
+    }
+  }
+
+  /** Create JSON Object for TableDataInsertAllResponseInsertErrors */
+  core.Map toJson() {
+    var output = new core.Map();
+
+    if (errors != null) {
+      output["errors"] = errors.map((errorsItem) => errorsItem.toJson()).toList();
+    }
+    if (index != null) {
+      output["index"] = index;
+    }
+
+    return output;
+  }
+
+  /** Return String representation of TableDataInsertAllResponseInsertErrors */
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -2063,7 +2232,7 @@ class TableDataList {
   }
 
   /** Return String representation of TableDataList */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -2118,7 +2287,7 @@ class TableFieldSchema {
   }
 
   /** Return String representation of TableFieldSchema */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -2182,7 +2351,7 @@ class TableList {
   }
 
   /** Return String representation of TableList */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -2237,7 +2406,7 @@ class TableListTables {
   }
 
   /** Return String representation of TableListTables */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -2283,7 +2452,7 @@ class TableReference {
   }
 
   /** Return String representation of TableReference */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -2311,7 +2480,7 @@ class TableRow {
   }
 
   /** Return String representation of TableRow */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 
@@ -2339,7 +2508,7 @@ class TableSchema {
   }
 
   /** Return String representation of TableSchema */
-  core.String toString() => JSON.stringify(this.toJson());
+  core.String toString() => JSON.encode(this.toJson());
 
 }
 

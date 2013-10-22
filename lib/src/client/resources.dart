@@ -8,7 +8,7 @@ class DatasetsResource_ {
       _client = client;
 
   /**
-   * Deletes the dataset specified by datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.
+   * Deletes the dataset specified by the datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.
    *
    * [projectId] - Project ID of the dataset being deleted
    *
@@ -123,18 +123,21 @@ class DatasetsResource_ {
    *
    * [projectId] - Project ID of the datasets to be listed
    *
+   * [all] - Whether to list all datasets, including hidden ones
+   *
    * [maxResults] - The maximum number of results to return
    *
    * [pageToken] - Page token, returned by a previous call, to request the next page of results
    *
    * [optParams] - Additional query parameters
    */
-  async.Future<DatasetList> list(core.String projectId, {core.int maxResults, core.String pageToken, core.Map optParams}) {
+  async.Future<DatasetList> list(core.String projectId, {core.bool all, core.int maxResults, core.String pageToken, core.Map optParams}) {
     var url = "projects/{projectId}/datasets";
     var urlParams = new core.Map();
     var queryParams = new core.Map();
 
     var paramErrors = new core.List();
+    if (all != null) queryParams["all"] = all;
     if (maxResults != null) queryParams["maxResults"] = maxResults;
     if (pageToken != null) queryParams["pageToken"] = pageToken;
     if (projectId == null) paramErrors.add("projectId is required");
@@ -158,7 +161,7 @@ class DatasetsResource_ {
   }
 
   /**
-   * Updates information in an existing dataset, specified by datasetId. Properties not included in the submitted resource will not be changed. If you include the access property without any values assigned, the request will fail as you must specify at least one owner for a dataset. This method supports patch semantics.
+   * Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource. This method supports patch semantics.
    *
    * [request] - Dataset to send in this request
    *
@@ -197,7 +200,7 @@ class DatasetsResource_ {
   }
 
   /**
-   * Updates information in an existing dataset, specified by datasetId. Properties not included in the submitted resource will not be changed. If you include the access property without any values assigned, the request will fail as you must specify at least one owner for a dataset.
+   * Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource.
    *
    * [request] - Dataset to send in this request
    *
@@ -522,6 +525,49 @@ class TabledataResource_ {
       _client = client;
 
   /**
+   * Inserts the supplied rows into the table.
+   *
+   * [request] - TableDataInsertAllRequest to send in this request
+   *
+   * [projectId] - Project ID of the destination table.
+   *
+   * [datasetId] - Dataset ID of the destination table.
+   *
+   * [tableId] - Table ID of the destination table.
+   *
+   * [optParams] - Additional query parameters
+   */
+  async.Future<TableDataInsertAllResponse> insertAll(TableDataInsertAllRequest request, core.String projectId, core.String datasetId, core.String tableId, {core.Map optParams}) {
+    var url = "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll";
+    var urlParams = new core.Map();
+    var queryParams = new core.Map();
+
+    var paramErrors = new core.List();
+    if (datasetId == null) paramErrors.add("datasetId is required");
+    if (datasetId != null) urlParams["datasetId"] = datasetId;
+    if (projectId == null) paramErrors.add("projectId is required");
+    if (projectId != null) urlParams["projectId"] = projectId;
+    if (tableId == null) paramErrors.add("tableId is required");
+    if (tableId != null) urlParams["tableId"] = tableId;
+    if (optParams != null) {
+      optParams.forEach((key, value) {
+        if (value != null && queryParams[key] == null) {
+          queryParams[key] = value;
+        }
+      });
+    }
+
+    if (!paramErrors.isEmpty) {
+      throw new core.ArgumentError(paramErrors.join(" / "));
+    }
+
+    var response;
+    response = _client.request(url, "POST", body: request.toString(), urlParams: urlParams, queryParams: queryParams);
+    return response
+      .then((data) => new TableDataInsertAllResponse.fromJson(data));
+  }
+
+  /**
    * Retrieves table data from a specified set of rows.
    *
    * [projectId] - Project ID of the table to read
@@ -743,7 +789,7 @@ class TablesResource_ {
   }
 
   /**
-   * Updates information in an existing table, specified by tableId. This method supports patch semantics.
+   * Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports patch semantics.
    *
    * [request] - Table to send in this request
    *
@@ -786,7 +832,7 @@ class TablesResource_ {
   }
 
   /**
-   * Updates information in an existing table, specified by tableId.
+   * Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource.
    *
    * [request] - Table to send in this request
    *

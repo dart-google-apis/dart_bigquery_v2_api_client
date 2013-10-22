@@ -2,7 +2,7 @@ library bigquery_v2_api.console;
 
 import "package:google_oauth2_client/google_oauth2_console.dart" as oauth2;
 
-import 'package:google_bigquery_v2_api/src/cloud_api_console.dart';
+import 'package:google_bigquery_v2_api/src/console_client.dart';
 
 import "package:google_bigquery_v2_api/bigquery_v2_api_client.dart";
 
@@ -12,7 +12,7 @@ class Bigquery extends Client with ConsoleClient {
   /** OAuth Scope2: View and manage your data in Google BigQuery */
   static const String BIGQUERY_SCOPE = "https://www.googleapis.com/auth/bigquery";
 
-  /** OAuth Scope2: MESSAGE UNDER CONSTRUCTION View and manage your data across Google Cloud Platform services */
+  /** OAuth Scope2: View and manage your data across Google Cloud Platform services */
   static const String CLOUD_PLATFORM_SCOPE = "https://www.googleapis.com/auth/cloud-platform";
 
   /** OAuth Scope2: Manage your data and permissions in Google Cloud Storage */
