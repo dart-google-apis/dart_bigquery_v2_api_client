@@ -918,7 +918,7 @@ class JobConfigurationLoad {
 
 class JobConfigurationQuery {
 
-  /** [Experimental] If true, allows >128M results to be materialized in the destination table. Requires destination_table to be set. */
+  /** If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destination_table to be set. */
   core.bool allowLargeResults;
 
   /** [Optional] Whether to create the table if it doesn't already exist (CREATE_IF_NEEDED) or to require the table already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED. */
