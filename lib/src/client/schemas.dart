@@ -648,13 +648,16 @@ class JobConfigurationExtract {
   /** [Experimental] Optional and defaults to CSV. Format with which files should be exported. To export to CSV, specify "CSV". Tables with nested or repeated fields cannot be exported as CSV. To export to newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". */
   core.String destinationFormat;
 
-  /** [Required] The fully-qualified Google Cloud Storage URI where the extracted table should be written. */
+  /** [Pick one] DEPRECATED: Use destinationUris instead, passing only one URI as necessary. The fully-qualified Google Cloud Storage URI where the extracted table should be written. */
   core.String destinationUri;
+
+  /** [Pick one] A list of fully-qualified Google Cloud Storage URIs where the extracted table should be written. */
+  core.List<core.String> destinationUris;
 
   /** [Optional] Delimiter to use between fields in the exported data. Default is ',' */
   core.String fieldDelimiter;
 
-  /** [Optional] Whether to print out a heder row in the results. Default is true. */
+  /** [Optional] Whether to print out a header row in the results. Default is true. */
   core.bool printHeader;
 
   /** [Required] A reference to the table being exported. */
@@ -667,6 +670,9 @@ class JobConfigurationExtract {
     }
     if (json.containsKey("destinationUri")) {
       destinationUri = json["destinationUri"];
+    }
+    if (json.containsKey("destinationUris")) {
+      destinationUris = json["destinationUris"].toList();
     }
     if (json.containsKey("fieldDelimiter")) {
       fieldDelimiter = json["fieldDelimiter"];
@@ -689,6 +695,9 @@ class JobConfigurationExtract {
     if (destinationUri != null) {
       output["destinationUri"] = destinationUri;
     }
+    if (destinationUris != null) {
+      output["destinationUris"] = destinationUris.toList();
+    }
     if (fieldDelimiter != null) {
       output["fieldDelimiter"] = fieldDelimiter;
     }
@@ -709,7 +718,7 @@ class JobConfigurationExtract {
 
 class JobConfigurationLink {
 
-  /** [Optional] Whether or not to create a new table, if none exists. */
+  /** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. */
   core.String createDisposition;
 
   /** [Required] The destination table of the link job. */
@@ -718,7 +727,7 @@ class JobConfigurationLink {
   /** [Required] URI of source table to link. */
   core.List<core.String> sourceUri;
 
-  /** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_APPEND. */
+  /** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. */
   core.String writeDisposition;
 
   /** Create new JobConfigurationLink from JSON data */
@@ -782,6 +791,9 @@ class JobConfigurationLoad {
   /** [Optional] The separator for fields in a CSV file. BigQuery converts the string to ISO-8859-1 encoding, and then uses the first byte of the encoded string to split the data in its raw, binary state. BigQuery also supports the escape sequence "\t" to specify a tab separator. The default value is a comma (','). */
   core.String fieldDelimiter;
 
+  /** [Optional] Accept rows that contain values that do not match the schema. The unknown values are ignored. Default is false which treats unknown values as errors. For CSV this ignores extra values at the end of a line. For JSON this ignores named values that do not match any column name. */
+  core.bool ignoreUnknownValues;
+
   /** [Optional] The maximum number of bad records that BigQuery can ignore when running the job. If the number of bad records exceeds this value, an 'invalid' error is returned in the job result and the job fails. The default value is 0, which requires that all records are valid. */
   core.int maxBadRecords;
 
@@ -806,7 +818,7 @@ class JobConfigurationLoad {
   /** [Required] The fully-qualified URIs that point to your data on Google Cloud Storage. */
   core.List<core.String> sourceUris;
 
-  /** [Optional] Specifies the action that occurs if the destination table already exists. Each action is atomic and only occurs if BigQuery is able to fully load the data and the load job completes without error. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists, a 'duplicate' error is returned in the job result. Creation, truncation and append actions occur as one atomic update upon job completion. */
+  /** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. */
   core.String writeDisposition;
 
   /** Create new JobConfigurationLoad from JSON data */
@@ -828,6 +840,9 @@ class JobConfigurationLoad {
     }
     if (json.containsKey("fieldDelimiter")) {
       fieldDelimiter = json["fieldDelimiter"];
+    }
+    if (json.containsKey("ignoreUnknownValues")) {
+      ignoreUnknownValues = json["ignoreUnknownValues"];
     }
     if (json.containsKey("maxBadRecords")) {
       maxBadRecords = json["maxBadRecords"];
@@ -880,6 +895,9 @@ class JobConfigurationLoad {
     if (fieldDelimiter != null) {
       output["fieldDelimiter"] = fieldDelimiter;
     }
+    if (ignoreUnknownValues != null) {
+      output["ignoreUnknownValues"] = ignoreUnknownValues;
+    }
     if (maxBadRecords != null) {
       output["maxBadRecords"] = maxBadRecords;
     }
@@ -921,19 +939,19 @@ class JobConfigurationQuery {
   /** If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destination_table to be set. */
   core.bool allowLargeResults;
 
-  /** [Optional] Whether to create the table if it doesn't already exist (CREATE_IF_NEEDED) or to require the table already exist (CREATE_NEVER). Default is CREATE_IF_NEEDED. */
+  /** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. */
   core.String createDisposition;
 
-  /** [Optional] Specifies the default dataset to assume for unqualified table names in the query. */
+  /** [Optional] Specifies the default dataset to use for unqualified table names in the query. */
   DatasetReference defaultDataset;
 
   /** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. */
   TableReference destinationTable;
 
-  /** [Experimental] If set, preserve null values in table data, rather than mapping null values to the column's default value. This flag currently defaults to false, but the default will soon be changed to true. Shortly afterward, this flag will be removed completely. Please specify true if possible, and false only if you need to force the old behavior while updating client code. */
+  /** [Deprecated] This property is deprecated. */
   core.bool preserveNulls;
 
-  /** [Optional] Specifies a priority for the query. Default is INTERACTIVE. Alternative is BATCH. */
+  /** [Optional] Specifies a priority for the query. Possible values include INTERACTIVE and BATCH. The default value is INTERACTIVE. */
   core.String priority;
 
   /** [Required] BigQuery SQL query to execute. */
@@ -942,7 +960,7 @@ class JobConfigurationQuery {
   /** [Optional] Whether to look for the result in the query cache. The query cache is a best-effort cache that will be flushed whenever tables in the query are modified. Moreover, the query cache is only available when a query does not have a destination table specified. */
   core.bool useQueryCache;
 
-  /** [Optional] Whether to overwrite an existing table (WRITE_TRUNCATE), append to an existing table (WRITE_APPEND), or require that the the table is empty (WRITE_EMPTY). Default is WRITE_EMPTY. */
+  /** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. */
   core.String writeDisposition;
 
   /** Create new JobConfigurationQuery from JSON data */
@@ -1018,7 +1036,7 @@ class JobConfigurationQuery {
 
 class JobConfigurationTableCopy {
 
-  /** [Optional] Whether or not to create a new table, if none exists. */
+  /** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. */
   core.String createDisposition;
 
   /** [Required] The destination table */
@@ -1027,7 +1045,7 @@ class JobConfigurationTableCopy {
   /** [Required] Source table to copy. */
   TableReference sourceTable;
 
-  /** [Optional] Whether or not to append or require the table to be empty. */
+  /** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. */
   core.String writeDisposition;
 
   /** Create new JobConfigurationTableCopy from JSON data */
@@ -1161,6 +1179,9 @@ class JobListJobs {
   /** [Full-projection-only] Describes the state of the job. */
   JobStatus status;
 
+  /** [Full-projection-only] User who ran the job. */
+  core.String user_email;
+
   /** Create new JobListJobs from JSON data */
   JobListJobs.fromJson(core.Map json) {
     if (json.containsKey("configuration")) {
@@ -1186,6 +1207,9 @@ class JobListJobs {
     }
     if (json.containsKey("status")) {
       status = new JobStatus.fromJson(json["status"]);
+    }
+    if (json.containsKey("user_email")) {
+      user_email = json["user_email"];
     }
   }
 
@@ -1216,6 +1240,9 @@ class JobListJobs {
     }
     if (status != null) {
       output["status"] = status.toJson();
+    }
+    if (user_email != null) {
+      output["user_email"] = user_email;
     }
 
     return output;
@@ -1901,6 +1928,12 @@ class Table {
   /** [Required] Reference describing the ID of this table. */
   TableReference tableReference;
 
+  /** [Output-only] Describes the type of this table. Possible values are TABLE, VIEW. - TABLE type indicates it is a normal BigQuery table. - VIEW type shares many of the properties of tables, but instead of storing data it is defined by a query. A view may have additional limitations. */
+  core.String type;
+
+  /** [Experimental] Describes the view definition when table is of type view. */
+  ViewDefinition view;
+
   /** Create new Table from JSON data */
   Table.fromJson(core.Map json) {
     if (json.containsKey("creationTime")) {
@@ -1941,6 +1974,12 @@ class Table {
     }
     if (json.containsKey("tableReference")) {
       tableReference = new TableReference.fromJson(json["tableReference"]);
+    }
+    if (json.containsKey("type")) {
+      type = json["type"];
+    }
+    if (json.containsKey("view")) {
+      view = new ViewDefinition.fromJson(json["view"]);
     }
   }
 
@@ -1986,6 +2025,12 @@ class Table {
     }
     if (tableReference != null) {
       output["tableReference"] = tableReference.toJson();
+    }
+    if (type != null) {
+      output["type"] = type;
+    }
+    if (view != null) {
+      output["view"] = view.toJson();
     }
 
     return output;
@@ -2180,7 +2225,7 @@ class TableDataList {
   /** The resource type of the response. */
   core.String kind;
 
-  /** A token used for paging results. Providing this token instead of the startRow parameter can help you retrieve stable results when an underlying table is changing. */
+  /** A token used for paging results. Providing this token instead of the startIndex parameter can help you retrieve stable results when an underlying table is changing. */
   core.String pageToken;
 
   /** Rows of results. */
@@ -2238,6 +2283,9 @@ class TableDataList {
 
 class TableFieldSchema {
 
+  /** [Optional] The field description. */
+  core.String description;
+
   /** [Optional] Describes the nested schema fields if the type property is set to RECORD. */
   core.List<TableFieldSchema> fields;
 
@@ -2252,6 +2300,9 @@ class TableFieldSchema {
 
   /** Create new TableFieldSchema from JSON data */
   TableFieldSchema.fromJson(core.Map json) {
+    if (json.containsKey("description")) {
+      description = json["description"];
+    }
     if (json.containsKey("fields")) {
       fields = json["fields"].map((fieldsItem) => new TableFieldSchema.fromJson(fieldsItem)).toList();
     }
@@ -2270,6 +2321,9 @@ class TableFieldSchema {
   core.Map toJson() {
     var output = new core.Map();
 
+    if (description != null) {
+      output["description"] = description;
+    }
     if (fields != null) {
       output["fields"] = fields.map((fieldsItem) => fieldsItem.toJson()).toList();
     }
@@ -2369,6 +2423,9 @@ class TableListTables {
   /** A reference uniquely identifying the table. */
   TableReference tableReference;
 
+  /** The type of table. Possible values are: TABLE, VIEW. */
+  core.String type;
+
   /** Create new TableListTables from JSON data */
   TableListTables.fromJson(core.Map json) {
     if (json.containsKey("friendlyName")) {
@@ -2382,6 +2439,9 @@ class TableListTables {
     }
     if (json.containsKey("tableReference")) {
       tableReference = new TableReference.fromJson(json["tableReference"]);
+    }
+    if (json.containsKey("type")) {
+      type = json["type"];
     }
   }
 
@@ -2400,6 +2460,9 @@ class TableListTables {
     }
     if (tableReference != null) {
       output["tableReference"] = tableReference.toJson();
+    }
+    if (type != null) {
+      output["type"] = type;
     }
 
     return output;
@@ -2508,6 +2571,34 @@ class TableSchema {
   }
 
   /** Return String representation of TableSchema */
+  core.String toString() => JSON.encode(this.toJson());
+
+}
+
+class ViewDefinition {
+
+  /** [Required] SQL query that gets executed when this view is referenced (e.g. 'SELECT field1, field2 FROM [dataset.table]') */
+  core.String query;
+
+  /** Create new ViewDefinition from JSON data */
+  ViewDefinition.fromJson(core.Map json) {
+    if (json.containsKey("query")) {
+      query = json["query"];
+    }
+  }
+
+  /** Create JSON Object for ViewDefinition */
+  core.Map toJson() {
+    var output = new core.Map();
+
+    if (query != null) {
+      output["query"] = query;
+    }
+
+    return output;
+  }
+
+  /** Return String representation of ViewDefinition */
   core.String toString() => JSON.encode(this.toJson());
 
 }
