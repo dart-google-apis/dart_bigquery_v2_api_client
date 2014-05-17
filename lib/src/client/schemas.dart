@@ -2,29 +2,25 @@ part of bigquery_v2_api;
 
 class Dataset {
 
-  /** [Optional] Describes users' rights on the dataset. You can assign the same role to multiple users, and assign multiple roles to the same user.
-Default values assigned to a new dataset are as follows: OWNER - Project owners, dataset creator READER - Project readers WRITER - Project writers
-See ACLs and Rights for a description of these rights. If you specify any of these roles when creating a dataset, the assigned roles will overwrite the defaults listed above.
-To revoke rights to a dataset, call datasets.update() and omit the names of anyone whose rights you wish to revoke. However, every dataset must have at least one entity granted OWNER role.
-Each access object can have only one of the following members: userByEmail, groupByEmail, domain, or allAuthenticatedUsers. */
+  /** [Optional] An array of objects that define dataset access for one or more entities. You can set this property when inserting or updating a dataset in order to control who is allowed to access the data. If unspecified at dataset creation time, BigQuery adds default dataset access for the following entities: access.specialGroup: projectReaders; access.role: READER; access.specialGroup: projectWriters; access.role: WRITER; access.specialGroup: projectOwners; access.role: OWNER; access.userByEmail: [dataset creator email]; access.role: OWNER; */
   core.List<DatasetAccess> access;
 
   /** [Output-only] The time when this dataset was created, in milliseconds since the epoch. */
   core.int creationTime;
 
-  /** [Required] Reference identifying dataset. */
+  /** [Required] A reference that identifies the dataset. */
   DatasetReference datasetReference;
 
-  /** [Optional] A user-friendly string description for the dataset. This might be shown in BigQuery UI for browsing the dataset. */
+  /** [Optional] A user-friendly description of the dataset. */
   core.String description;
 
-  /** [Output-only] A hash of this resource. */
+  /** [Output-only] A hash of the resource. */
   core.String etag;
 
-  /** [Optional] A descriptive name for this dataset, which might be shown in any BigQuery user interfaces for browsing the dataset. Use datasetId for making API calls. */
+  /** [Optional] A descriptive name for the dataset. */
   core.String friendlyName;
 
-  /** [Output-only] The fully-qualified unique name of this dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field. */
+  /** [Output-only] The fully-qualified unique name of the dataset in the format projectId:datasetId. The dataset name without the project name is given in the datasetId field. When creating a new dataset, leave this field blank, and instead specify the datasetId field. */
   core.String id;
 
   /** [Output-only] The resource type. */
@@ -33,7 +29,7 @@ Each access object can have only one of the following members: userByEmail, grou
   /** [Output-only] The date when this dataset or any of its tables was last modified, in milliseconds since the epoch. */
   core.int lastModifiedTime;
 
-  /** [Output-only] An URL that can be used to access this resource again. You can use this URL in Get or Update requests to this resource. */
+  /** [Output-only] A URL that can be used to access the resource again. You can use this URL in Get or Update requests to the resource. */
   core.String selfLink;
 
   /** Create new Dataset from JSON data */
@@ -118,16 +114,16 @@ class DatasetAccess {
   /** [Pick one] A domain to grant access to. Any users signed in with the domain specified will be granted the specified access. Example: "example.com". */
   core.String domain;
 
-  /** [Pick one] A fully-qualified email address of a mailing list to grant access to. This must be either a Google Groups mailing list (ends in @googlegroups.com) or a group managed by an enterprise version of Google Groups. */
+  /** [Pick one] An email address of a Google Group to grant access to. */
   core.String groupByEmail;
 
-  /** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER - User can call any list() or get() method on any collection or resource. WRITER - User can call any method on any collection except for datasets, on which they can call list() and get(). OWNER - User can call any method. The dataset creator is granted this role by default. */
+  /** [Required] Describes the rights granted to the user specified by the other member of the access object. The following string values are supported: READER, WRITER, OWNER. */
   core.String role;
 
-  /** [Pick one] A special group to grant access to. The valid values are: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. */
+  /** [Pick one] A special group to grant access to. Possible values include: projectOwners: Owners of the enclosing project. projectReaders: Readers of the enclosing project. projectWriters: Writers of the enclosing project. allAuthenticatedUsers: All authenticated BigQuery users. */
   core.String specialGroup;
 
-  /** [Pick one] A fully qualified email address of a user to grant access to. For example: fred@example.com. */
+  /** [Pick one] An email address of a user to grant access to. For example: fred@example.com. */
   core.String userByEmail;
 
   /** Create new DatasetAccess from JSON data */
@@ -948,6 +944,9 @@ class JobConfigurationQuery {
   /** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. */
   TableReference destinationTable;
 
+  /** [Experimental] Flattens all nested and repeated fields in the query results. The default value is true. allow_large_results must be true if this is set to false. */
+  core.bool flattenResults;
+
   /** [Deprecated] This property is deprecated. */
   core.bool preserveNulls;
 
@@ -976,6 +975,9 @@ class JobConfigurationQuery {
     }
     if (json.containsKey("destinationTable")) {
       destinationTable = new TableReference.fromJson(json["destinationTable"]);
+    }
+    if (json.containsKey("flattenResults")) {
+      flattenResults = json["flattenResults"];
     }
     if (json.containsKey("preserveNulls")) {
       preserveNulls = json["preserveNulls"];
@@ -1009,6 +1011,9 @@ class JobConfigurationQuery {
     }
     if (destinationTable != null) {
       output["destinationTable"] = destinationTable.toJson();
+    }
+    if (flattenResults != null) {
+      output["flattenResults"] = flattenResults;
     }
     if (preserveNulls != null) {
       output["preserveNulls"] = preserveNulls;
@@ -1928,10 +1933,10 @@ class Table {
   /** [Required] Reference describing the ID of this table. */
   TableReference tableReference;
 
-  /** [Output-only] Describes the type of this table. Possible values are TABLE, VIEW. - TABLE type indicates it is a normal BigQuery table. - VIEW type shares many of the properties of tables, but instead of storing data it is defined by a query. A view may have additional limitations. */
+  /** [Output-only] Describes the table type. The following values are supported: TABLE: A normal BigQuery table. VIEW: A virtual table defined by a SQL query. The default value is TABLE. */
   core.String type;
 
-  /** [Experimental] Describes the view definition when table is of type view. */
+  /** [Optional] The view definition. */
   ViewDefinition view;
 
   /** Create new Table from JSON data */
@@ -2577,7 +2582,7 @@ class TableSchema {
 
 class ViewDefinition {
 
-  /** [Required] SQL query that gets executed when this view is referenced (e.g. 'SELECT field1, field2 FROM [dataset.table]') */
+  /** [Required] A query that BigQuery executes when the view is referenced. */
   core.String query;
 
   /** Create new ViewDefinition from JSON data */
