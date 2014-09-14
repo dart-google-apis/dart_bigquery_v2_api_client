@@ -377,7 +377,7 @@ class JobsResource_ {
   }
 
   /**
-   * Lists all the Jobs in the specified project that were started by the user.
+   * Lists all the Jobs in the specified project that were started by the user. The job list returns in reverse chronological order of when the jobs were created, starting with the most recent job created.
    *
    * [projectId] - Project ID of the jobs to list
    *
@@ -525,7 +525,7 @@ class TabledataResource_ {
       _client = client;
 
   /**
-   * Inserts the supplied rows into the table.
+   * Streams data into BigQuery one record at a time without needing to run a load job.
    *
    * [request] - TableDataInsertAllRequest to send in this request
    *

@@ -126,6 +126,9 @@ class DatasetAccess {
   /** [Pick one] An email address of a user to grant access to. For example: fred@example.com. */
   core.String userByEmail;
 
+  /** [Pick one] A view from a different dataset to grant access to. Queries executed against that view will have read access to tables in this dataset. The role field is not required when this field is set. If that view is updated by any user, access to the view needs to be granted again via an update operation. */
+  TableReference view;
+
   /** Create new DatasetAccess from JSON data */
   DatasetAccess.fromJson(core.Map json) {
     if (json.containsKey("domain")) {
@@ -142,6 +145,9 @@ class DatasetAccess {
     }
     if (json.containsKey("userByEmail")) {
       userByEmail = json["userByEmail"];
+    }
+    if (json.containsKey("view")) {
+      view = new TableReference.fromJson(json["view"]);
     }
   }
 
@@ -163,6 +169,9 @@ class DatasetAccess {
     }
     if (userByEmail != null) {
       output["userByEmail"] = userByEmail;
+    }
+    if (view != null) {
+      output["view"] = view.toJson();
     }
 
     return output;
@@ -641,7 +650,10 @@ class JobConfiguration {
 
 class JobConfigurationExtract {
 
-  /** [Experimental] Optional and defaults to CSV. Format with which files should be exported. To export to CSV, specify "CSV". Tables with nested or repeated fields cannot be exported as CSV. To export to newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". */
+  /** [Optional] The compression type to use for exported files. Possible values include GZIP and NONE. The default value is NONE. */
+  core.String compression;
+
+  /** [Optional] The exported file format. Possible values include CSV, NEWLINE_DELIMITED_JSON and AVRO. The default value is CSV. Tables with nested or repeated fields cannot be exported as CSV. */
   core.String destinationFormat;
 
   /** [Pick one] DEPRECATED: Use destinationUris instead, passing only one URI as necessary. The fully-qualified Google Cloud Storage URI where the extracted table should be written. */
@@ -661,6 +673,9 @@ class JobConfigurationExtract {
 
   /** Create new JobConfigurationExtract from JSON data */
   JobConfigurationExtract.fromJson(core.Map json) {
+    if (json.containsKey("compression")) {
+      compression = json["compression"];
+    }
     if (json.containsKey("destinationFormat")) {
       destinationFormat = json["destinationFormat"];
     }
@@ -685,6 +700,9 @@ class JobConfigurationExtract {
   core.Map toJson() {
     var output = new core.Map();
 
+    if (compression != null) {
+      output["compression"] = compression;
+    }
     if (destinationFormat != null) {
       output["destinationFormat"] = destinationFormat;
     }
@@ -932,7 +950,7 @@ class JobConfigurationLoad {
 
 class JobConfigurationQuery {
 
-  /** If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destination_table to be set. */
+  /** If true, allows the query to produce arbitrarily large result tables at a slight cost in performance. Requires destinationTable to be set. */
   core.bool allowLargeResults;
 
   /** [Optional] Specifies whether the job is allowed to create new tables. The following values are supported: CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the table. CREATE_NEVER: The table must already exist. If it does not, a 'notFound' error is returned in the job result. The default value is CREATE_IF_NEEDED. Creation, truncation and append actions occur as one atomic update upon job completion. */
@@ -944,7 +962,7 @@ class JobConfigurationQuery {
   /** [Optional] Describes the table where the query results should be stored. If not present, a new table will be created to store the results. */
   TableReference destinationTable;
 
-  /** [Experimental] Flattens all nested and repeated fields in the query results. The default value is true. allow_large_results must be true if this is set to false. */
+  /** [Experimental] Flattens all nested and repeated fields in the query results. The default value is true. allowLargeResults must be true if this is set to false. */
   core.bool flattenResults;
 
   /** [Deprecated] This property is deprecated. */
@@ -1047,8 +1065,11 @@ class JobConfigurationTableCopy {
   /** [Required] The destination table */
   TableReference destinationTable;
 
-  /** [Required] Source table to copy. */
+  /** [Pick one] Source table to copy. */
   TableReference sourceTable;
+
+  /** [Pick one] Source tables to copy. */
+  core.List<TableReference> sourceTables;
 
   /** [Optional] Specifies the action that occurs if the destination table already exists. The following values are supported: WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the table data. WRITE_APPEND: If the table already exists, BigQuery appends the data to the table. WRITE_EMPTY: If the table already exists and contains data, a 'duplicate' error is returned in the job result. The default value is WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is able to complete the job successfully. Creation, truncation and append actions occur as one atomic update upon job completion. */
   core.String writeDisposition;
@@ -1063,6 +1084,9 @@ class JobConfigurationTableCopy {
     }
     if (json.containsKey("sourceTable")) {
       sourceTable = new TableReference.fromJson(json["sourceTable"]);
+    }
+    if (json.containsKey("sourceTables")) {
+      sourceTables = json["sourceTables"].map((sourceTablesItem) => new TableReference.fromJson(sourceTablesItem)).toList();
     }
     if (json.containsKey("writeDisposition")) {
       writeDisposition = json["writeDisposition"];
@@ -1081,6 +1105,9 @@ class JobConfigurationTableCopy {
     }
     if (sourceTable != null) {
       output["sourceTable"] = sourceTable.toJson();
+    }
+    if (sourceTables != null) {
+      output["sourceTables"] = sourceTables.map((sourceTablesItem) => sourceTablesItem.toJson()).toList();
     }
     if (writeDisposition != null) {
       output["writeDisposition"] = writeDisposition;
@@ -1715,7 +1742,7 @@ class QueryRequest {
   /** [Optional] The maximum number of rows of data to return per page of results. Setting this flag to a small value such as 1000 and then paging through results might improve reliability when the query result set is large. In addition to this limit, responses are also limited to 10 MB. By default, there is no maximum row count, and only the byte limit applies. */
   core.int maxResults;
 
-  /** [Deprecated] If set to false, maps null values in the query response to the column's default value. Only specify if you have older code that can not handle null values in the query response. The default value is true. This flag is deprecated and will be ignored in a future version of BigQuery. */
+  /** [Deprecated] This property is deprecated. */
   core.bool preserveNulls;
 
   /** [Required] A query string, following the BigQuery query syntax, of the query to execute. Example: "SELECT count(f1) FROM [myProjectId:myDatasetId.myTableId]". */
